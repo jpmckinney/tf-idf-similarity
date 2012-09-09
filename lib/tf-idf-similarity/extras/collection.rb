@@ -6,21 +6,21 @@ class TfIdfSimilarity::Collection
 
   # @note SMART t, Salton f, Chisholm IDFB
   def plain_inverse_document_frequency(term)
-    count = document_counts(term).to_f
-    Math.log2 documents.size / count
+    count = document_counts[term].to_f
+    Math.log documents.size / count
   end
   alias_method :plain_idf, :plain_inverse_document_frequency
 
   # @note SMART p, Salton p, Chisholm IDFP
   def probabilistic_inverse_document_frequency(term)
-    count = document_counts(term).to_f
-    Math.log2 (documents.size - count) / count
+    count = document_counts[term].to_f
+    Math.log (documents.size - count) / count
   end
   alias_method :probabilistic_idf, :probabilistic_inverse_document_frequency
 
   # @note Chisholm IGFF
   def global_frequency_inverse_document_frequency(term)
-    term_counts[term] / document_counts(term).to_f
+    term_counts[term] / document_counts[term].to_f
   end
   alias_method :gfidf, :global_frequency_inverse_document_frequency
 
@@ -45,10 +45,10 @@ class TfIdfSimilarity::Collection
   # @note Chisholm ENPY
   def entropy(term)
     denominator = term_counts[term].to_f
-    logN = Math.log2 documents.size
+    logN = Math.log documents.size
     1 + documents.reduce(0) do |sum,document|
-      quotient = document.term_count(term) / denominator
-      sum += quotient * Math.log2(quotient) / logN
+      quotient = document.term_counts[term] / denominator
+      sum += quotient * Math.log(quotient) / logN
     end
   end
 

@@ -52,7 +52,7 @@ class TfIdfSimilarity::Collection
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
   def inverse_document_frequency(term)
-    1 + Math.log2 documents.size / (document_counts(term).to_f + 1)
+    1 + Math.log(documents.size / (document_counts[term].to_f + 1))
   end
   alias_method :idf, :inverse_document_frequency
 
@@ -61,6 +61,6 @@ class TfIdfSimilarity::Collection
   #
   # @note Lucene normalizes document length differently.
   def normalize(matrix)
-    Matrix.columns tfidf.column_vectors.map(&:normalize)
+    Matrix.columns matrix.column_vectors.map(&:normalize)
   end
 end

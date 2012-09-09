@@ -5,7 +5,11 @@ For performance, use [Lucene](http://lucene.apache.org/core/), which implements 
 ## Usage
 
     require 'tf-idf-similarity'
-
+    corpus = TfIdfSimilarity::Collection.new
+    corpus << TfIdfSimilarity::Document.new("Lorem ipsum dolor sit amet...")
+    corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
+    corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
+    p corpus.similarity_matrix
 
 ## Extras
 

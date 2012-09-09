@@ -1,9 +1,19 @@
 class TfIdfSimilarity::Document
+  # @return [Float] the maximum term count of any term in the document
+  def maximum_term_count
+    @maximum_term_count ||= @term_counts.values.max.to_f
+  end
+
+  # @return [Float] the average term count of all terms in the document
+  def average_term_count
+    @average_term_count ||= @term_counts.values.reduce(:+) / @term_counts.size.to_f
+  end
+
   # Returns the term count.
   #
   # @note SMART n, Salton t, Chisholm FREQ
   def plain_term_frequency(term)
-    term_count term
+    term_counts[term]
   end
   alias :plain_tf, :plain_term_frequency
 
@@ -11,7 +21,7 @@ class TfIdfSimilarity::Document
   #
   # @note SMART b, Salton b, Chisholm BNRY
   def binary_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
       1
     else
@@ -24,7 +34,7 @@ class TfIdfSimilarity::Document
   #
   # @see http://en.wikipedia.org/wiki/Tf*idf
   def normalized_term_frequency(term)
-    term_count(term) / maximum_term_count
+    term_counts[term] / maximum_term_count
   end
   alias_method :normalized_tf, :normalized_term_frequency
 
@@ -38,7 +48,7 @@ class TfIdfSimilarity::Document
 
   # @note Chisholm ATFA 
   def augmented_average_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
       0.9 + 0.1 * count / average_term_count
     else
@@ -49,7 +59,7 @@ class TfIdfSimilarity::Document
 
   # @note Chisholm ATFC
   def changed_coefficient_augmented_normalized_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
       0.2 + 0.8 * count / maximum_term_count
     else
@@ -62,9 +72,9 @@ class TfIdfSimilarity::Document
   #
   # @note SMART l, Chisholm LOGA
   def log_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
-      1 + Math.log2(count)
+      1 + Math.log(count)
     else
       0
     end
@@ -75,9 +85,9 @@ class TfIdfSimilarity::Document
   #
   # @note SMART L, Chisholm LOGN
   def normalized_log_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
-      (1 + Math.log2(count)) / (1 + Math.log2(average_term_count))
+      (1 + Math.log(count)) / (1 + Math.log(average_term_count))
     else
       0
     end
@@ -86,7 +96,7 @@ class TfIdfSimilarity::Document
 
   # @note Chisholm LOGG
   def augmented_log_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
       0.2 + 0.8 * Math.log(count + 1)
     else
@@ -99,7 +109,7 @@ class TfIdfSimilarity::Document
   #
   # @note Chisholm SQRT
   def square_root_term_frequency(term)
-    count = term_count term
+    count = term_counts[term]
     if count > 0
       Math.sqrt(count - 0.5) + 1
     else

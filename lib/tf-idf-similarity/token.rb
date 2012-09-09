@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # @note We can add more filters from Solr and stem using Porter's Snowball.
 #
 # @see https://github.com/aurelian/ruby-stemmer
@@ -12,7 +14,7 @@ class TfIdfSimilarity::Token < String
   #
   # @return [Boolean] whether the string is a token
   def valid?
-    token[%r{
+    !self[%r{
       \A
         (
          \d           | # number
@@ -24,17 +26,17 @@ class TfIdfSimilarity::Token < String
     }x]
   end
 
-  # @return [String] a lowercase string
+  # @return [Token] a lowercase string
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.LowerCaseFilterFactory
   def lowercase_filter
-    UnicodeUtils.downcase self, :fr
+    self.class.new UnicodeUtils.downcase(self, :fr)
   end
 
-  # @return [String] a string with no English possessive or periods in acronyms
+  # @return [Token] a string with no English possessive or periods in acronyms
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.ClassicFilterFactory
   def classic_filter
-    self.gsub('.', '').chomp "'s"
+    self.class.new self.gsub('.', '').chomp("'s")
   end
 end
