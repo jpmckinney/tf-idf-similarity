@@ -1,5 +1,8 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
+[![Dependency Status](https://gemnasium.com/opennorth/tf-idf-similarity.png)](https://gemnasium.com/opennorth/tf-idf-similarity)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/opennorth/tf-idf-similarity)
+
 Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency](http://en.wikipedia.org/wiki/Tf*idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (or similar), which also implements other information retrieval functions like [BM 25](http://en.wikipedia.org/wiki/Okapi_BM25).
 
 ## Usage
