@@ -1,8 +1,6 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
-Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency](http://en.wikipedia.org/wiki/Tf*idf) weights.
-
-For performance, use [Lucene](http://lucene.apache.org/core/), which also implements other information retrieval functions like [BM 25](http://en.wikipedia.org/wiki/Okapi_BM25).
+Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency](http://en.wikipedia.org/wiki/Tf*idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (or similar), which also implements other information retrieval functions like [BM 25](http://en.wikipedia.org/wiki/Okapi_BM25).
 
 ## Usage
 
@@ -18,8 +16,6 @@ For performance, use [Lucene](http://lucene.apache.org/core/), which also implem
 This gem will use the [gsl gem](http://rb-gsl.rubyforge.org/) if available, for faster matrix multiplication.
 
 ## Optimizations
-
-The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector. [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) and old and not available as gems.
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
@@ -47,7 +43,11 @@ Or [create links](https://github.com/SciRuby/nmatrix/issues/21) before installin
     sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/cblas.h /usr/include/cblas.h
     sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/clapack.h /usr/include/clapack.h
 
-The `0.0.2` version [doesn't compile on Mac OS X Lion](https://github.com/SciRuby/nmatrix/issues/34).
+Version `0.0.2` [doesn't compile on Mac OS X Lion](https://github.com/SciRuby/nmatrix/issues/34).
+
+### Other Considerations
+
+The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector. [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) and old and not available as gems.
 
 ## Extras
 
@@ -58,7 +58,7 @@ You can access more term frequency, document frequency, and normalization formul
 
 The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
-## Papers
+## Reference
 
 * [G. Salton and C. Buckley. "Term Weighting Approaches in Automatic Text Retrieval."" Technical Report. Cornell University, Ithaca, NY, USA. 1987.](http://www.cs.odu.edu/~jbollen/IR04/readings/article1-29-03.pdf)
 * [E. Chisholm and T. G. Kolda. "New term weighting formulas for the vector space method in information retrieval." Technical Report Number ORNL-TM-13756. Oak Ridge National Laboratory, Oak Ridge, TN, USA. 1999.](http://www.sandia.gov/~tgkolda/pubs/bibtgkfiles/ornl-tm-13756.pdf)
