@@ -99,7 +99,12 @@ class TfIdfSimilarity::Collection
       # @see https://github.com/masa16/narray/issues/21
       NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(5,1))
     elsif nmatrix?
-      # @todo NMatrix has no way to retrieve a column, besides iteration.
+      # @todo NMatrix has no way to perform scalar operations on matrices.
+      # (0...matrix.shape[0]).each do |i|
+      #   column = matrix.slice(i, 0...matrix.shape[1])
+      #   norm = column.dot(column.transpose)
+      #   # No way to divide column by norm.
+      # end
       matrix.cast :yale, :float64
     else
       Matrix.columns matrix.column_vectors.map(&:normalize)
