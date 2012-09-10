@@ -8,6 +8,8 @@ class TfIdfSimilarity::Document
   attr_reader :text
   # The number of times each term appears in the document.
   attr_reader :term_counts
+  # The document size, in terms.
+  attr_reader :size
 
   # @param [String] text the document's text
   # @param [Hash] opts optional arguments
@@ -43,6 +45,7 @@ private
         @term_counts[token.lowercase_filter.classic_filter.to_s] += 1
       end
     end
+    @size = term_counts.values.reduce(:+)
   end
 
   # Tokenizes a text, respecting the word boundary rules from Unicode’s Default

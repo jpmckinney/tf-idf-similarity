@@ -34,43 +34,42 @@ class TfIdfSimilarity::Collection
     term_counts.keys
   end
 
+  # @param [Hash] opts optional arguments
+  # @option opts [Symbol] :function one of :tfidf (default) or :bm25
+  #
+  # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
+  # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/BM25Similarity.html
   # @see http://en.wikipedia.org/wiki/Vector_space_model
   # @see http://en.wikipedia.org/wiki/Document-term_matrix
   # @see http://en.wikipedia.org/wiki/Cosine_similarity
-  def similarity_matrix
-    if matrix?
+  def similarity_matrix(opts = {})
+    if stdlib?
       idf = []
-      term_document_matrix = Matrix.build(terms.size, documents.size) do |i,j|
-        idf[i] ||= inverse_document_frequency terms[i]
-        documents[j].term_frequency(terms[i]) * idf[i]
+      matrix = Matrix.build(terms.size, documents.size) do |i,j|
+        idf[i] ||= inverse_document_frequency(terms[i], opts)
+        idf[i] * term_frequency(documents[j], terms[i], opts)
       end
     else
-      term_document_matrix = if gsl?
-        GSL::Matrix.alloc terms.size, documents.size
-      elsif narray?
-        NArray.float documents.size, terms.size
-      elsif nmatrix?
-        NMatrix.new(:list, [terms.size, documents.size], :float64)
-      end
-
+      matrix = initialize_matrix
       terms.each_with_index do |term,i|
-        idf = inverse_document_frequency term
+        idf = inverse_document_frequency(term, opts)
         documents.each_with_index do |document,j|
-          tfidf = document.term_frequency(term) * idf
-          if gsl? || nmatrix?
-            term_document_matrix[i, j] = tfidf
+          value = idf * term_frequency(document, term, opts)
           # NArray puts the dimensions in a different order.
           # @see http://narray.rubyforge.org/SPEC.en
-          elsif narray?
-            term_document_matrix[j, i] = tfidf
+          if narray?
+            matrix[j, i] = value
+          else
+            matrix[i, j] = value
           end
         end
       end
-    end
 
-    # Columns are normalized to unit vectors, so we can calculate the cosine
-    # similarity of all document vectors.
-    matrix = normalize term_document_matrix
+      # Columns are normalized to unit vectors, so we can calculate the cosine
+      # similarity of all document vectors. BM25 doesn't normalize columns, but
+      # BM25 wasn't written with this use case in mind.
+      matrix = normalize matrix
+    end
 
     if nmatrix?
       matrix.transpose.dot matrix
@@ -80,13 +79,45 @@ class TfIdfSimilarity::Collection
   end
 
   # @param [String] term a term
+  # @param [Hash] opts optional arguments
+  # @option opts [Symbol] :function one of :tfidf (default) or :bm25
   # @return [Float] the term's inverse document frequency
-  #
-  # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
-  def inverse_document_frequency(term)
-    1 + Math.log(documents.size / (document_counts[term].to_f + 1))
+  def inverse_document_frequency(term, opts = {})
+    if opts[:function] == :bm25
+      Math.log (documents.size - document_counts[term] + 0.5) / (document_counts[term] + 0.5)
+    else
+      1 + Math.log(documents.size / (document_counts[term].to_f + 1))
+    end
   end
   alias_method :idf, :inverse_document_frequency
+
+  # @param [Document] document a document
+  # @param [String] term a term
+  # @param [Hash] opts optional arguments
+  # @option opts [Symbol] :function one of :tfidf (default) or :bm25
+  # @return [Float] the term's frequency in the document
+  #
+  # @note Like Lucene, we use a b value of 0.75 and a k1 value of 1.2.
+  def term_frequency(document, term, opts = {})
+    if opts[:function] == :bm25
+      (document.term_counts[term] * 2.2) / (document.term_counts[term] + 0.3 + 0.9 * document.size / average_document_size)
+    else
+      document.term_frequency term
+    end
+  end
+
+  # @return [Float] the average document size, in terms
+  def average_document_size
+    @average_document_size ||= documents.map(&:size).reduce(:+) / documents.size.to_f
+  end
+
+  # Resets the average document size.
+  #
+  # If you have already made a similarity matrix and are adding more documents,
+  # call this method before creating a new similarity matrix.
+  def reset_average_document_size!
+    @average_document_size = nil
+  end
 
   # @param [Document] matrix a term-document matrix
   # @return [Matrix] a matrix in which all document vectors are unit vectors
@@ -101,8 +132,8 @@ class TfIdfSimilarity::Collection
     elsif nmatrix?
       # @todo NMatrix has no way to perform scalar operations on matrices.
       # (0...matrix.shape[0]).each do |i|
-      #   column = matrix.slice(i, 0...matrix.shape[1])
-      #   norm = column.dot(column.transpose)
+      #   column = matrix.slice i, 0...matrix.shape[1]
+      #   norm   = column.dot column.transpose
       #   # No way to divide column by norm.
       # end
       matrix.cast :yale, :float64
@@ -113,19 +144,34 @@ class TfIdfSimilarity::Collection
 
 private
 
+  # @return a matrix
+  def initialize_matrix
+    if gsl?
+      GSL::Matrix.alloc terms.size, documents.size
+    elsif narray?
+      NArray.float documents.size, terms.size
+    elsif nmatrix?
+      NMatrix.new(:list, [terms.size, documents.size], :float64)
+    end
+  end
+
+  # @return [Boolean] whether to use the GSL gem
   def gsl?
     @gsl     ||= Object.const_defined?(:GSL)
   end
 
+  # @return [Boolean] whether to use the NArray gem
   def narray?
     @narray  ||= Object.const_defined?(:NArray) && !gsl?
   end
 
+  # @return [Boolean] whether to use the NMatrix gem
   def nmatrix?
-    @nmatrix ||= Object.const_defined?(:NMatrix) && !narray?
+    @nmatrix ||= Object.const_defined?(:NMatrix) && !gsl? && !narray?
   end
 
-  def matrix?
+  # @return [Boolean] whether to use the standard library
+  def stdlib?
     @matrix  ||= Object.const_defined?(:Matrix)
   end
 end
