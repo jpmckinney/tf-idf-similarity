@@ -19,7 +19,7 @@ This gem will use the [gsl gem](http://rb-gsl.rubyforge.org/) if available, for 
 
 ## Optimizations
 
-The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector.
+The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector. [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) and old and not available as gems.
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
