@@ -1,15 +1,53 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
-For performance, use [Lucene](http://lucene.apache.org/core/), which implements other information retrieval functions, like [BM 25](http://en.wikipedia.org/wiki/Okapi_BM25).
+Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency](http://en.wikipedia.org/wiki/Tf*idf) weights.
+
+For performance, use [Lucene](http://lucene.apache.org/core/), which also implements other information retrieval functions like [BM 25](http://en.wikipedia.org/wiki/Okapi_BM25).
 
 ## Usage
 
     require 'tf-idf-similarity'
+
     corpus = TfIdfSimilarity::Collection.new
     corpus << TfIdfSimilarity::Document.new("Lorem ipsum dolor sit amet...")
     corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
     corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
+
     p corpus.similarity_matrix
+
+This gem will use the [gsl gem](http://rb-gsl.rubyforge.org/) if available, for faster matrix multiplication.
+
+## Optimizations
+
+The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector.
+
+### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
+
+The latest `gsl` gem (`1.14.7`) is [not compatible](http://bretthard.in/2012/03/getting-related_posts-lsi-and-gsl-to-work-in-jekyll/) with the `gsl` package (`1.15`) in Homebrew:
+
+```sh
+cd /usr/local
+git checkout -b gsl-1.14 83ed49411f076e30ced04c2cbebb054b2645a431
+brew install gsl
+git checkout master
+git branch -d gsl-1.14
+gem install gsl
+```
+
+### [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/)
+
+You may know this software through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/).
+
+The `nmatrix` gem (`0.0.1`) can't find the `cblas.h` and `clapack.h` header files. Either [set the C_INCLUDE_PATH](https://github.com/SciRuby/nmatrix#synopsis):
+
+    export C_INCLUDE_PATH=/System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/
+
+Or [create links](https://github.com/SciRuby/nmatrix/issues/21) before installing the gem:
+
+    sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/cblas.h /usr/include/cblas.h
+    sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/clapack.h /usr/include/clapack.h
+
+The `0.0.2` version [doesn't compile on Mac OS X Lion](https://github.com/SciRuby/nmatrix/issues/34).
 
 ## Extras
 
@@ -18,7 +56,7 @@ You can access more term frequency, document frequency, and normalization formul
     require 'tf-idf-similarity/extras/collection'
     require 'tf-idf-similarity/extras/document'
 
-The default tf*idf formula follows [Lucene](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
+The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
 ## Papers
 
