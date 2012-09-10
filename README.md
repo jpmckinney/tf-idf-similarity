@@ -58,6 +58,10 @@ You can access more term frequency, document frequency, and normalization formul
 
 The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
+## Why?
+
+The [treat](https://github.com/louismullie/treat), [tf-idf](https://github.com/reddavis/TF-IDF), [similarity](https://github.com/bbcrd/Similarity) and [rsimilarity](https://github.com/josephwilk/rsemantic) gems normalize the frequency of a term in a document to the number of terms in that document (which, as far as I can tell, never occurs in the academic literature) and have no normalization component. [vss](https://github.com/mkdynamic/vss) uses plain term and document frequencies, with no damping or normalization.
+
 ## Reference
 
 * [G. Salton and C. Buckley. "Term Weighting Approaches in Automatic Text Retrieval."" Technical Report. Cornell University, Ithaca, NY, USA. 1987.](http://www.cs.odu.edu/~jbollen/IR04/readings/article1-29-03.pdf)
