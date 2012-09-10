@@ -20,6 +20,10 @@ This gem will use the [gsl gem](http://rb-gsl.rubyforge.org/) if available, for 
 
 ## Optimizations
 
+### [NArray](http://narray.rubyforge.org/)
+
+    gem install narray
+
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
 The latest `gsl` gem (`1.14.7`) is [not compatible](http://bretthard.in/2012/03/getting-related_posts-lsi-and-gsl-to-work-in-jekyll/) with the `gsl` package (`1.15`) in Homebrew:
@@ -35,22 +39,11 @@ gem install gsl
 
 ### [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/)
 
-You may know this software through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/).
-
-The `nmatrix` gem (`0.0.1`) can't find the `cblas.h` and `clapack.h` header files. Either [set the C_INCLUDE_PATH](https://github.com/SciRuby/nmatrix#synopsis):
-
-    export C_INCLUDE_PATH=/System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/
-
-Or [create links](https://github.com/SciRuby/nmatrix/issues/21) before installing the gem:
-
-    sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/cblas.h /usr/include/cblas.h
-    sudo ln -s /System/Library/Frameworks/Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers/clapack.h /usr/include/clapack.h
-
-Version `0.0.2` [doesn't compile on Mac OS X Lion](https://github.com/SciRuby/nmatrix/issues/34).
+You may know this software through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). You can use it through version `0.0.2` of the [nmatrix gem](https://github.com/SciRuby/nmatrix). As of writing, `0.0.2` is not released, so follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install it. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/NMatrix-Installation).
 
 ### Other Considerations
 
-The [narray](http://narray.rubyforge.org/) and [nmatrix](http://sciruby.com/nmatrix/) gems have no method to calculate the magnitude of a vector. [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) are old and not available as gems.
+The [nmatrix](http://sciruby.com/nmatrix/) gem has no easy way to normalize all columns to unit vectors. [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) are old and not available as gems.
 
 ## Extras
 

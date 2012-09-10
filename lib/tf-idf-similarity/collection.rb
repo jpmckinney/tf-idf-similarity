@@ -1,5 +1,8 @@
+# @todo Do speed comparison between these gsl and narray, to load fastest first.
 begin
   require 'gsl'
+rescue LoadError
+  require 'narray'
 rescue LoadError
   require 'matrix'
 end
@@ -45,11 +48,9 @@ class TfIdfSimilarity::Collection
       term_document_matrix = if gsl?
         GSL::Matrix.alloc terms.size, documents.size
       elsif narray?
-        NMatrix.float documents.size, terms.size
+        NArray.float documents.size, terms.size
       elsif nmatrix?
-        # The nmatrix gem's sparse matrices are unfortunately buggy.
-        # @see https://github.com/SciRuby/nmatrix/issues/35
-        NMatrix.new([terms.size, documents.size], :float64)
+        NMatrix.new(:list, [terms.size, documents.size], :float64)
       end
 
       terms.each_with_index do |term,i|
@@ -95,14 +96,11 @@ class TfIdfSimilarity::Collection
     if gsl?
       matrix.each_col(&:normalize!)
     elsif narray?
-      # @todo NArray doesn't have a method to normalize a vector.
-      # 0.upto(matrix.shape[0] - 1).each do |j|
-      #   matrix[j, true] # Normalize this column somehow.
-      # end
-      matrix
+      # @see https://github.com/masa16/narray/issues/21
+      NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(5,1))
     elsif nmatrix?
-      # @todo NMatrix doesn't have a method to normalize a vector.
-      matrix
+      # @todo NMatrix has no way to retrieve a column, besides iteration.
+      matrix.cast :yale, :float64
     else
       Matrix.columns matrix.column_vectors.map(&:normalize)
     end
