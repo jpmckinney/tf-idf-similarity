@@ -1,3 +1,5 @@
+require 'tf-idf-similarity/document'
+
 class TfIdfSimilarity::Document
   # @return [Float] the maximum term count of any term in the document
   def maximum_term_count
@@ -9,9 +11,11 @@ class TfIdfSimilarity::Document
     @average_term_count ||= @term_counts.values.reduce(:+) / @term_counts.size.to_f
   end
 
+
+
   # Returns the term count.
   #
-  # @note SMART n, Salton t, Chisholm FREQ
+  # SMART n, Salton t, Chisholm FREQ
   def plain_term_frequency(term)
     term_counts[term]
   end
@@ -19,7 +23,7 @@ class TfIdfSimilarity::Document
 
   # Returns 1 if the term is present, 0 otherwise.
   #
-  # @note SMART b, Salton b, Chisholm BNRY
+  # SMART b, Salton b, Chisholm BNRY
   def binary_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -40,13 +44,13 @@ class TfIdfSimilarity::Document
 
   # Further normalizes the normalized term frequency to lie between 0.5 and 1.
   #
-  # @note SMART a, Salton n, Chisholm ATF1
+  # SMART a, Salton n, Chisholm ATF1
   def augmented_normalized_term_frequency(term)
     0.5 + 0.5 * normalized_term_frequency(term)
   end
   alias_method :augmented_normalized_tf, :augmented_normalized_term_frequency
 
-  # @note Chisholm ATFA 
+  # Chisholm ATFA
   def augmented_average_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -57,7 +61,7 @@ class TfIdfSimilarity::Document
   end
   alias_method :augmented_average_tf, :augmented_average_term_frequency
 
-  # @note Chisholm ATFC
+  # Chisholm ATFC
   def changed_coefficient_augmented_normalized_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -68,9 +72,7 @@ class TfIdfSimilarity::Document
   end
   alias_method :changed_coefficient_augmented_normalized_tf, :changed_coefficient_augmented_normalized_term_frequency
 
-  # Dampen the term count using log.
-  #
-  # @note SMART l, Chisholm LOGA
+  # SMART l, Chisholm LOGA
   def log_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -81,9 +83,7 @@ class TfIdfSimilarity::Document
   end
   alias_method :log_tf, :log_term_frequency
 
-  # Dampen and normalize the term count by the average term count.
-  #
-  # @note SMART L, Chisholm LOGN
+  # SMART L, Chisholm LOGN
   def normalized_log_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -94,7 +94,7 @@ class TfIdfSimilarity::Document
   end
   alias_method :normalized_log_tf, :normalized_log_term_frequency
 
-  # @note Chisholm LOGG
+  # Chisholm LOGG
   def augmented_log_term_frequency(term)
     count = term_counts[term]
     if count > 0
@@ -105,9 +105,7 @@ class TfIdfSimilarity::Document
   end
   alias_method :augmented_log_tf, :augmented_log_term_frequency
 
-  # Dampen the term count using square root.
-  #
-  # @note Chisholm SQRT
+  # Chisholm SQRT
   def square_root_term_frequency(term)
     count = term_counts[term]
     if count > 0
