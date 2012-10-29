@@ -118,6 +118,7 @@ class TfIdfSimilarity::Collection
       document.term_frequency term
     end
   end
+  alias_method :tf, :term_frequency
 
   # @return [Float] the average document size, in terms
   def average_document_size

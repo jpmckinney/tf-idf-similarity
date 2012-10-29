@@ -11,8 +11,6 @@ class TfIdfSimilarity::Document
     @average_term_count ||= @term_counts.values.reduce(:+) / @term_counts.size.to_f
   end
 
-
-
   # Returns the term count.
   #
   # SMART n, Salton t, Chisholm FREQ
