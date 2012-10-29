@@ -6,6 +6,8 @@ class TfIdfSimilarity::Document
   attr_reader :id
   # The document's text.
   attr_reader :text
+  # The document's tokenized text.
+  attr_reader :tokens
   # The number of times each term appears in the document.
   attr_reader :term_counts
   # The document size, in terms.
@@ -14,9 +16,11 @@ class TfIdfSimilarity::Document
   # @param [String] text the document's text
   # @param [Hash] opts optional arguments
   # @option opts [String] :id a string to identify the document
+  # @option opts [Array] :tokens the document's tokenized text
   def initialize(text, opts = {})
     @text        = text
     @id          = opts[:id] || object_id
+    @tokens      = opts[:tokens]
     @term_counts = Hash.new 0
     process
   end
@@ -51,6 +55,9 @@ private
   # Tokenizes a text, respecting the word boundary rules from Unicode’s Default
   # Word Boundary Specification.
   #
+  # If a tokenized text was provided at the document's initialization, those
+  # tokens will be returned without additional processing.
+  #
   # @param [String] text a text
   # @return [Enumerator] a token enumerator
   #
@@ -60,6 +67,6 @@ private
   # @see http://unicode.org/reports/tr29/#Default_Word_Boundaries
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StandardTokenizerFactory
   def tokenize(text)
-    UnicodeUtils.each_word text
+    @tokens || UnicodeUtils.each_word(text)
   end
 end

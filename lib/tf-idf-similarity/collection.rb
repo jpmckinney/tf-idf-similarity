@@ -42,6 +42,7 @@ class TfIdfSimilarity::Collection
   # @see http://en.wikipedia.org/wiki/Vector_space_model
   # @see http://en.wikipedia.org/wiki/Document-term_matrix
   # @see http://en.wikipedia.org/wiki/Cosine_similarity
+  # @see http://en.wikipedia.org/wiki/Okapi_BM25
   def similarity_matrix(opts = {})
     if stdlib?
       idf = []
@@ -77,6 +78,18 @@ class TfIdfSimilarity::Collection
       matrix.transpose * matrix
     end
   end
+
+  # @param [Document] document a document
+  # @param [String] term a term
+  # @param [Hash] opts optional arguments
+  # @option opts [Symbol] :function one of :tfidf (default) or :bm25
+  # @return [Float] the term's frequency in the document
+  #
+  # @note Like Lucene, we use a b value of 0.75 and a k1 value of 1.2.
+  def term_frequency_inverse_document_frequency(document, term, opts = {})
+    inverse_document_frequency(term, opts) * term_frequency(document, term, opts)
+  end
+  alias_method :tfidf, :term_frequency_inverse_document_frequency
 
   # @param [String] term a term
   # @param [Hash] opts optional arguments
