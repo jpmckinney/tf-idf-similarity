@@ -2,9 +2,11 @@
 begin
   require 'gsl'
 rescue LoadError
-  require 'narray'
-rescue LoadError
-  require 'matrix'
+  begin
+    require 'narray'
+  rescue LoadError
+    require 'matrix'
+  end
 end
 
 class TfIdfSimilarity::Collection
