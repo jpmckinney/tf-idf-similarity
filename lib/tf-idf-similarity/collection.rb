@@ -144,7 +144,7 @@ class TfIdfSimilarity::Collection
       matrix.each_col(&:normalize!)
     elsif narray?
       # @see https://github.com/masa16/narray/issues/21
-      NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(5,1))
+      NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1))
     elsif nmatrix?
       # @todo NMatrix has no way to perform scalar operations on matrices.
       # (0...matrix.shape[0]).each do |i|
