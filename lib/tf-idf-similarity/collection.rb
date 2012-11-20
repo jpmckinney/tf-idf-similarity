@@ -156,11 +156,11 @@ class TfIdfSimilarity::Collection
       NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1))
     elsif nmatrix?
       # @see https://github.com/SciRuby/nmatrix/issues/38
-      # @todo NMatrix has no way to perform scalar operations on matrices.
+      # Is matrix.slice by reference, or do we need to rebuild the matrix?
       # (0...matrix.shape[0]).each do |i|
       #   column = matrix.slice i, 0...matrix.shape[1]
-      #   norm   = column.dot column.transpose
-      #   # No way to divide column by norm.
+      #   norm   = Math.sqrt(column.dot(column.transpose)[0,0])
+      #   column /= norm
       # end
       matrix.cast :yale, :float64
     else
