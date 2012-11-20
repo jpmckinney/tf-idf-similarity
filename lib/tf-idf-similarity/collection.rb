@@ -154,6 +154,7 @@ class TfIdfSimilarity::Collection
       # @see https://github.com/masa16/narray/issues/21
       NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1))
     elsif nmatrix?
+      # @see https://github.com/SciRuby/nmatrix/issues/38
       # @todo NMatrix has no way to perform scalar operations on matrices.
       # (0...matrix.shape[0]).each do |i|
       #   column = matrix.slice i, 0...matrix.shape[1]
