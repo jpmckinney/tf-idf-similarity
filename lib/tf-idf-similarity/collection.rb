@@ -156,12 +156,12 @@ class TfIdfSimilarity::Collection
       NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1))
     elsif nmatrix?
       # @see https://github.com/SciRuby/nmatrix/issues/38
-      # Is matrix.slice by reference, or do we need to rebuild the matrix?
-      # (0...matrix.shape[0]).each do |i|
-      #   column = matrix.slice i, 0...matrix.shape[1]
-      #   norm   = Math.sqrt(column.dot(column.transpose)[0,0])
-      #   column /= norm
-      # end
+      (0...matrix.shape[1]).each do |j|
+        # @see https://github.com/SciRuby/nmatrix/pull/46
+        column = matrix.slice 0...matrix.shape[0], j
+        norm = Math.sqrt(column.transpose.dot(column)[0, 0])
+        # @todo update matrix
+      end
       matrix.cast :yale, :float64
     else
       Matrix.columns matrix.column_vectors.map(&:normalize)
