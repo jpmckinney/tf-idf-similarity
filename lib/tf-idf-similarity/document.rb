@@ -35,7 +35,7 @@ class TfIdfSimilarity::Document
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
   def term_frequency(term)
-    Math.sqrt term_counts[term]
+    Math.sqrt term_counts[term].to_i
   end
   alias_method :tf, :term_frequency
 

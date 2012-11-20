@@ -86,8 +86,6 @@ class TfIdfSimilarity::Collection
   # @param [Hash] opts optional arguments
   # @option opts [Symbol] :function one of :tfidf (default) or :bm25
   # @return [Float] the term's frequency in the document
-  #
-  # @note Like Lucene, we use a b value of 0.75 and a k1 value of 1.2.
   def term_frequency_inverse_document_frequency(document, term, opts = {})
     inverse_document_frequency(term, opts) * term_frequency(document, term, opts)
   end
@@ -115,7 +113,7 @@ class TfIdfSimilarity::Collection
   # @note Like Lucene, we use a b value of 0.75 and a k1 value of 1.2.
   def term_frequency(document, term, opts = {})
     if opts[:function] == :bm25
-      (document.term_counts[term] * 2.2) / (document.term_counts[term] + 0.3 + 0.9 * document.size / average_document_size)
+      (document.term_counts[term].to_i * 2.2) / (document.term_counts[term].to_i + 0.3 + 0.9 * document.size / average_document_size)
     else
       document.term_frequency term
     end
