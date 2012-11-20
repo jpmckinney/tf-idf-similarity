@@ -10,6 +10,8 @@ rescue LoadError
 end
 
 class TfIdfSimilarity::Collection
+  class CollectionError < StandardError; end
+
   # The documents in the collection.
   attr_reader :documents
   # The number of times each term appears in all documents.
@@ -46,6 +48,10 @@ class TfIdfSimilarity::Collection
   # @see http://en.wikipedia.org/wiki/Cosine_similarity
   # @see http://en.wikipedia.org/wiki/Okapi_BM25
   def similarity_matrix(opts = {})
+    if documents.empty?
+      raise CollectionError, "No documents in collection"
+    end
+
     if stdlib?
       idf = []
       matrix = Matrix.build(terms.size, documents.size) do |i,j|
@@ -122,6 +128,10 @@ class TfIdfSimilarity::Collection
 
   # @return [Float] the average document size, in terms
   def average_document_size
+    if documents.empty?
+      raise CollectionError, "No documents in collection"
+    end
+
     @average_document_size ||= documents.map(&:size).reduce(:+) / documents.size.to_f
   end
 
