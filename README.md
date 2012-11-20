@@ -30,8 +30,11 @@ git checkout -b gsl-1.14 83ed49411f076e30ced04c2cbebb054b2645a431
 brew install gsl
 git checkout master
 git branch -d gsl-1.14
-gem install gsl
 ```
+
+Be careful not to upgrade `gsl` to `1.15` with `brew upgrade outdated`. You can now run:
+
+    gem install gsl --no-ri --no-rdoc
 
 ### [NArray](http://narray.rubyforge.org/)
 

@@ -52,6 +52,7 @@ class TfIdfSimilarity::Collection
       raise CollectionError, "No documents in collection"
     end
 
+    # Calculate tf*idf.
     if stdlib?
       idf = []
       matrix = Matrix.build(terms.size, documents.size) do |i,j|
@@ -73,12 +74,12 @@ class TfIdfSimilarity::Collection
           end
         end
       end
-
-      # Columns are normalized to unit vectors, so we can calculate the cosine
-      # similarity of all document vectors. BM25 doesn't normalize columns, but
-      # BM25 wasn't written with this use case in mind.
-      matrix = normalize matrix
     end
+
+    # Columns are normalized to unit vectors, so we can calculate the cosine
+    # similarity of all document vectors. BM25 doesn't normalize columns, but
+    # BM25 wasn't written with this use case in mind.
+    matrix = normalize matrix
 
     if nmatrix?
       matrix.transpose.dot matrix
@@ -144,7 +145,7 @@ class TfIdfSimilarity::Collection
   end
 
   # @param [Document] matrix a term-document matrix
-  # @return [Matrix] a matrix in which all document vectors are unit vectors
+  # @return [GSL::Matrix,NMatrix,Matrix] a matrix in which all document vectors are unit vectors
   #
   # @note Lucene normalizes document length differently.
   def normalize(matrix)
