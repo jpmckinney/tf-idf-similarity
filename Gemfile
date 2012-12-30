@@ -1,4 +1,4 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in scraperwiki-api.gemspec
+# Specify your gem's dependencies in the gemspec
 gemspec
