@@ -153,14 +153,16 @@ class TfIdfSimilarity::Collection
       matrix.each_col(&:normalize!)
     elsif narray?
       # @see https://github.com/masa16/narray/issues/21
-      NMatrix.refer matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1))
+      NMatrix.refer(matrix / NMath.sqrt((matrix ** 2).sum(1).reshape(documents.size, 1)))
     elsif nmatrix?
       # @see https://github.com/SciRuby/nmatrix/issues/38
       (0...matrix.shape[1]).each do |j|
         # @see https://github.com/SciRuby/nmatrix/pull/46
-        column = matrix.slice 0...matrix.shape[0], j
+        column = matrix.column(j)
         norm = Math.sqrt(column.transpose.dot(column)[0, 0])
-        # @todo update matrix
+        (0...m.shape[0]).each do |i|
+          m[i, j] /= norm
+        end
       end
       matrix.cast :yale, :float64
     else
