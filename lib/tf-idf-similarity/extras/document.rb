@@ -2,11 +2,10 @@ require 'tf-idf-similarity/document'
 
 # @todo http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
 #
-# @note The treat, tf_idf, similarity and rsemantic gems normalizes to the number of terms in the document.
+# @note The treat, tf_idf and similarity gems normalizes to the number of terms in the document.
 # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L77
 # @see https://github.com/reddavis/TF-IDF/blob/master/lib/tf_idf.rb#L76
 # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
-# @see https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L17
 #
 # @note The tf-idf gem normalizes to the number of unique terms in the document.
 # @see https://github.com/mchung/tf-idf/blob/master/lib/tf-idf.rb#L172

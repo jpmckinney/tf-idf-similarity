@@ -55,15 +55,19 @@ The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http:
 
 ## Why?
 
-No other Ruby gem implements the tf*idf formula used by Lucene, Sphinx and Ferret.
+At the time of writing, no other Ruby gem implemented the tf*idf formula used by Lucene, Sphinx and Ferret.
+
+* [rsemantic](https://github.com/josephwilk/rsemantic) now uses the same [term frequency](https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L14) and [document frequency](https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L13) formulas as Lucene.
+* [treat](https://github.com/louismullie/treat) offers many term frequency formulas, [one of which](https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L13) is the same as Lucene.
+* [similarity](https://github.com/bbcrd/Similarity) uses [cosine normalization](https://github.com/bbcrd/Similarity/blob/master/lib/similarity/term_document_matrix.rb#L23), which corresponds roughly to Lucene.
 
 ### Term frequencies
 
-The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document; this occurs frequently in the academic literature, but only to demonstrate why normalization is important. The [treat](https://github.com/louismullie/treat), [tf_idf](https://github.com/reddavis/TF-IDF), [similarity](https://github.com/bbcrd/Similarity) and [rsemantic](https://github.com/josephwilk/rsemantic) gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature. The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
+The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document; this occurs frequently in the academic literature, but only to demonstrate why normalization is important. The [tf_idf](https://github.com/reddavis/TF-IDF) and similarity gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature. The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
 
 ### Document frequencies
 
-The vss gem does not normalize the inverse document frequency. The tf_idf, tf-idf, similarity and rsemantic gems use variants of the typical inverse document frequency formula.
+The vss gem does not normalize the inverse document frequency. The treat, tf_idf, tf-idf and similarity gems use variants of the typical inverse document frequency formula.
 
 ### Normalization
 

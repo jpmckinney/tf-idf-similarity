@@ -22,7 +22,6 @@ class TfIdfSimilarity::Collection
   end
 
   # @see https://github.com/reddavis/TF-IDF/blob/master/lib/tf_idf.rb#L50
-  # @see https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L15
   #
   # SMART t, Salton f, Chisholm IDFB
   def plain_inverse_document_frequency(term)
@@ -87,19 +86,6 @@ class TfIdfSimilarity::Collection
   end
 
   # @param [Document] matrix a term-document matrix
-  # @return [Matrix] a matrix in which all document vectors are unit vectors
-  # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/term_document_matrix.rb#L23
-  #
-  # SMART c, Salton c, Chisholm COSN
-  def cosine_normalization(matrix)
-    if gsl?
-      matrix.each_col(&:normalize!)
-    else
-      Matrix.columns matrix.column_vectors.map(&:normalize)
-    end
-  end
-
-  # @param [Document] matrix a term-document matrix
   # @return [Matrix] a matrix
   # @todo http://nlp.stanford.edu/IR-book/html/htmledition/pivoted-normalized-document-length-1.html
   #
@@ -107,4 +93,9 @@ class TfIdfSimilarity::Collection
   def pivoted_unique_normalization(matrix)
     raise NotImplementedError
   end
+
+
+  # Cosine normalization is implemented as TfIdfSimilarity::Collection#normalize.
+  #
+  # SMART c, Salton c, Chisholm COSN
 end

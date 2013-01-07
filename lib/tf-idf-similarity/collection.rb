@@ -157,7 +157,6 @@ class TfIdfSimilarity::Collection
     elsif nmatrix?
       # @see https://github.com/SciRuby/nmatrix/issues/38
       (0...matrix.shape[1]).each do |j|
-        # @see https://github.com/SciRuby/nmatrix/pull/46
         column = matrix.column(j)
         norm = Math.sqrt(column.transpose.dot(column)[0, 0])
         (0...m.shape[0]).each do |i|
