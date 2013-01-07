@@ -40,14 +40,6 @@ Be careful not to upgrade `gsl` to `1.15` with `brew upgrade outdated`. You can 
 
     gem install narray
 
-### [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/)
-
-You may know this software through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). You can use it through the next release (after `0.0.2`) of the [nmatrix gem](https://github.com/SciRuby/nmatrix). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install it. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/NMatrix-Installation).
-
-### Other Options
-
-[Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) are old and not available as gems.
-
 ## Extras
 
 You can access more term frequency, document frequency, and normalization formulas with:
@@ -63,7 +55,7 @@ No other Ruby gem implements the tf*idf formula used by Lucene, Sphinx and Ferre
 
 ### Term frequencies
 
-The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document, which occurs frequently in the academic literature, but only to demonstrate why normalization is important. The [treat](https://github.com/louismullie/treat), [tf_idf](https://github.com/reddavis/TF-IDF), [similarity](https://github.com/bbcrd/Similarity) and [rsemantic](https://github.com/josephwilk/rsemantic) gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature. The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
+The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document; this occurs frequently in the academic literature, but only to demonstrate why normalization is important. The [treat](https://github.com/louismullie/treat), [tf_idf](https://github.com/reddavis/TF-IDF), [similarity](https://github.com/bbcrd/Similarity) and [rsemantic](https://github.com/josephwilk/rsemantic) gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature. The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
 
 ### Document frequencies
 
@@ -87,7 +79,15 @@ Lucene implements many more [similarity functions](http://lucene.apache.org/core
 * a [language model with Bayesian smoothing using Dirichlet priors](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html)
 * a [language model with Jelinek-Mercer smoothing](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html)
 
-Lucene can even [combine similarity meatures](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
+Lucene can even [combine similarity measures](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
+
+## Other optimizations
+
+[Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/) is available through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). You can use it through the next release (after `0.0.2`) of the [nmatrix gem](https://github.com/SciRuby/nmatrix). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install it. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/NMatrix-Installation).
+
+### Other Options
+
+[Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) are old and not available as gems.
 
 ## Bugs? Questions?
 
