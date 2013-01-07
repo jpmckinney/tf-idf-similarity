@@ -34,6 +34,7 @@ class TfIdfSimilarity::Document
   # @return [Float] the square root of the term count
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
+  # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L13
   def term_frequency(term)
     Math.sqrt term_counts[term].to_i
   end
