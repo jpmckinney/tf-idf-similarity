@@ -42,7 +42,7 @@ Be careful not to upgrade `gsl` to `1.15` with `brew upgrade outdated`. You can 
 
 ### [NMatrix](https://github.com/SciRuby/nmatrix)
 
-You may have hard of [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/) through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). You can take advantage of ATLAS in the next release (after `0.0.2`) of the [nmatrix gem](https://github.com/SciRuby/nmatrix). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
+The nmatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the nmatrix gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
 
 ## Extras
 
@@ -84,10 +84,6 @@ Lucene implements many more [similarity functions](http://lucene.apache.org/core
 * a [language model with Jelinek-Mercer smoothing](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html)
 
 Lucene can even [combine similarity measures](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
-
-## Future Work
-
-[Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme. [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) give access to LAPACK from RUby, but are old and unavailable as gems.
 
 ## Bugs? Questions?
 
