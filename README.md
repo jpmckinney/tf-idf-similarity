@@ -73,6 +73,13 @@ The vss gem does not normalize the inverse document frequency. The treat, tf_idf
 
 The treat, tf_idf, tf-idf, rsemantic and vss gems have no normalization component.
 
+## Additional adapters
+
+Adapters for the following projects were also considered:
+
+* [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme.
+* [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) give access to LAPACK from Ruby, but are old and unavailable as gems.
+
 ## Reference
 
 * [G. Salton and C. Buckley. "Term Weighting Approaches in Automatic Text Retrieval."" Technical Report. Cornell University, Ithaca, NY, USA. 1987.](http://www.cs.odu.edu/~jbollen/IR04/readings/article1-29-03.pdf)
