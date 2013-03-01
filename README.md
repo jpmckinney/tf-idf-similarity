@@ -24,6 +24,8 @@ The following methods accept a `{function: :bm25}` options hash to use the [Okap
 * `term_frequency_inverse_document_frequency`
 * `similarity_matrix`
 
+[Read the documentation at RubyDoc.info](http://rubydoc.info/gems/tf-idf-similarity)
+
 ## Optimizations
 
 This gem will use the first available library below, for faster matrix multiplication.
