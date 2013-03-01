@@ -24,7 +24,7 @@ The following methods accept a `{function: :bm25}` options hash to use the [Okap
 * `term_frequency_inverse_document_frequency`
 * `similarity_matrix`
 
-[Read the documentation at RubyDoc.info](http://rubydoc.info/gems/tf-idf-similarity)
+[Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
 ## Optimizations
 
