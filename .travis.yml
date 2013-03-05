@@ -5,3 +5,14 @@ rvm:
   - 1.9.3
   - 2.0.0
   - ree
+env:
+  - MATRIX_LIBRARY=gsl
+  - MATRIX_LIBRARY=narray
+  - MATRIX_LIBRARY=nmatrix
+  - MATRIX_LIBRARY=matrix
+matrix:
+  exclude:
+    - rvm: 1.8.7
+      env: MATRIX_LIBRARY=nmatrix
+    - rvm: ree
+      env: MATRIX_LIBRARY=nmatrix

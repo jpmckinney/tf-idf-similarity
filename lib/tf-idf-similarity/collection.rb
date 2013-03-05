@@ -5,7 +5,11 @@ rescue LoadError
   begin
     require 'narray'
   rescue LoadError
-    require 'matrix'
+    begin
+      require 'nmatrix'
+    rescue LoadError
+      require 'matrix'
+    end
   end
 end
 

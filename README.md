@@ -1,5 +1,6 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
+[![Build Status](https://secure.travis-ci.org/opennorth/tf-idf-similarity.png)](http://travis-ci.org/opennorth/tf-idf-similarity)
 [![Dependency Status](https://gemnasium.com/opennorth/tf-idf-similarity.png)](https://gemnasium.com/opennorth/tf-idf-similarity)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/opennorth/tf-idf-similarity)
 
