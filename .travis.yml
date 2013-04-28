@@ -17,6 +17,7 @@ matrix:
     - rvm: ree
       env: MATRIX_LIBRARY=nmatrix
 # http://about.travis-ci.org/docs/user/build-configuration/
+# http://about.travis-ci.org/docs/user/ci-environment/
 # http://about.travis-ci.org/docs/user/languages/ruby/
 before_install:
   # http://www.vesperix.com/arm/atlas-arm/faq/index.html
@@ -25,12 +26,15 @@ before_install:
   # https://github.com/SciRuby/nmatrix/wiki/Installation
   # If installing libatlas-base-dev libatlas3gf-base via apt-get,
   # /usr/lib/libcblas.so and /usr/lib/libatlas.so will already exist.
+
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get update -qq -y; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq -y libblas3gf libblas-dev gfortran; fi
+  # http://ubuntuforums.org/showthread.php?t=1325671
+  # http://ubuntuforums.org/showthread.php?t=1877944
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq -y libblas3gf libblas-dev gfortran libc6-dev-i386; fi
   # http://math-atlas.sourceforge.net/atlas_install/node6.html
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then curl -L -O http://downloads.sourceforge.net/project/math-atlas/Stable/3.10.1/atlas3.10.1.tar.bz2; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then bunzip2 -c atlas3.10.1.tar.bz2 | tar xfm -; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then curl -O http://www.netlib.org/lapack/lapack-3.4.2.tgz; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then curl -o $HOME/lapack-3.4.2.tgz http://www.netlib.org/lapack/lapack-3.4.2.tgz; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd ATLAS; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then mkdir subdir; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd subdir; fi
@@ -50,3 +54,6 @@ before_install:
   - if [ $MATRIX_LIBRARY = 'gsl' ]; then gem install gsl; fi
   - if [ $MATRIX_LIBRARY = 'narray' ]; then gem install narray; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then gem install nmatrix; fi
+# Ruby 1.8.7 runs without Bundler
+install: bundle
+script: bundle exec rake --trace
