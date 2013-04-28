@@ -25,3 +25,6 @@ before_install:
   - make
   - sudo make install
   - rvm rubygems 1.8.25
+  - bundle
+script:
+  - bundle exec rake --trace
