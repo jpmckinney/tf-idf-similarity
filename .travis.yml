@@ -23,8 +23,8 @@ before_install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y libblas3gf libblas-dev gfortran
 
+  - curl -o atlas3.10.1.tar.bz2 "http://downloads.sourceforge.net/project/math-atlas/Stable/3.10.1/atlas3.10.1.tar.bz2?r=&ts=1367178352&use_mirror=iweb"
   - curl -O http://www.netlib.org/lapack/lapack-3.4.2.tgz
-  - curl -O http://downloads.sourceforge.net/project/math-atlas/Stable/3.10.1/atlas3.10.1.tar.bz2
 
   # http://www.vesperix.com/arm/atlas-arm/faq/index.html
   # @note Travis does not have those `cpu` directories.
