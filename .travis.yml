@@ -25,6 +25,7 @@ before_install:
   - make
   - sudo make install
   - rvm rubygems 1.8.25
+  - gem install nmatrix -v '0.0.3'
   - bundle
 script:
   - bundle exec rake --trace
