@@ -16,7 +16,12 @@ matrix:
       env: MATRIX_LIBRARY=nmatrix
     - rvm: ree
       env: MATRIX_LIBRARY=nmatrix
+# http://stackoverflow.com/a/12029573/244258
 before_install:
-  - sudo apt-get update -qq -y
-  - sudo apt-get install -qq -y gsl-bin libgsl0-dev
+  - curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz
+  - tar xvzf gsl-1.14.tar.gz
+  - cd gsl-1.14
+  - ./configure
+  - make
+  - sudo make install
   - rvm rubygems 1.8.25
