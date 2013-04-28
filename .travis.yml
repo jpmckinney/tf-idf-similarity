@@ -47,3 +47,6 @@ before_install:
   - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then make; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then sudo make install; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then rvm rubygems 1.8.25; fi
+  - if [ $MATRIX_LIBRARY = 'gsl' ]; then gem install gsl; fi
+  - if [ $MATRIX_LIBRARY = 'narray' ]; then gem install narray; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then gem install nmatrix; fi
