@@ -1,5 +1,9 @@
 # coding: utf-8
-require 'unicode_utils'
+begin
+  require 'unicode_utils'
+rescue LoadError
+  # Ruby 1.8
+end
 
 class TfIdfSimilarity::Document
   # An optional document identifier.
@@ -67,6 +71,6 @@ private
   # @see http://unicode.org/reports/tr29/#Default_Word_Boundaries
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StandardTokenizerFactory
   def tokenize(text)
-    @tokens || UnicodeUtils.each_word(text)
+    @tokens || defined?(UnicodeUtils) && UnicodeUtils.each_word(text) || text.split(/[[:space:]]+/) # @todo Ruby 1.8.7 has no good word boundary code
   end
 end

@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency('unicode_utils')
+  s.add_runtime_dependency('unicode_utils') unless RUBY_VERSION < '1.9'
   s.add_development_dependency('gsl', '~> 1.14.5')
   s.add_development_dependency('narray', '~> 0.6.0.0')
   s.add_development_dependency('nmatrix', '~> 0.0.3') unless RUBY_VERSION < '1.9'
