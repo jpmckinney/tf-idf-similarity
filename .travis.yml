@@ -27,7 +27,8 @@ before_install:
   - curl -O http://downloads.sourceforge.net/project/math-atlas/Stable/3.10.1/atlas3.10.1.tar.bz2
 
   # http://www.vesperix.com/arm/atlas-arm/faq/index.html
-  - for i in /sys/devices/system/cpu/cpu*; do cd $i; sudo sh -c "echo performance > scaling_governor";done
+  - ls /sys/devices/system/cpu/cpu*/cpufreq
+  - for i in /sys/devices/system/cpu/cpu*/cpufreq; do cd $i; sudo sh -c "echo performance > scaling_governor";done
 
   # http://math-atlas.sourceforge.net/atlas_install/node6.html
   # http://math-atlas.sourceforge.net/atlas_install/node8.html
