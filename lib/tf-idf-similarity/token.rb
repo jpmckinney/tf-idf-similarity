@@ -35,7 +35,7 @@ class TfIdfSimilarity::Token < String
            \p{Space}      # whitespace
           )+
         \z
-      }x]
+      }x] # The Ruby 1.8 parser will complain about this regular expression.
     end
   end
 

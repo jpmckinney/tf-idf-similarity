@@ -34,19 +34,7 @@ This gem will use the first available library below, for faster matrix multiplic
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
-The latest [gsl gem](http://rb-gsl.rubyforge.org/) (`1.14.7`) is [not compatible](http://bretthard.in/2012/03/getting-related_posts-lsi-and-gsl-to-work-in-jekyll/) with the `gsl` package (`1.15`) in Homebrew:
-
-```sh
-cd /usr/local
-git checkout -b gsl-1.14 83ed49411f076e30ced04c2cbebb054b2645a431
-brew install gsl
-git checkout master
-git branch -d gsl-1.14
-```
-
-Be careful not to upgrade `gsl` to `1.15` with `brew upgrade outdated`. You can now run:
-
-    gem install gsl --no-ri --no-rdoc
+    gem install gsl
 
 ### [NArray](http://narray.rubyforge.org/)
 
