@@ -19,3 +19,4 @@ matrix:
 before_install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y gsl-bin libgsl0-dev
+  - rvm rubygems 1.8.25
