@@ -20,7 +20,8 @@ before_install:
   # https://github.com/SciRuby/nmatrix/wiki/Installation
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y libatlas-base-dev libatlas3gf-base
-  - sudo ln -s /usr/lib/libgslcblas.so.0.0.0 /usr/lib/libcblas.so
+  # /usr/lib/libcblas.so already exists
+  #- sudo ln -s /usr/lib/libgslcblas.so.0.0.0 /usr/lib/libcblas.so
   - sudo ln -s /usr/lib/atlas-base/libatlas.so.3gf.0 /usr/lib/libatlas.so
   # http://stackoverflow.com/a/12029573/244258
   - curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz
