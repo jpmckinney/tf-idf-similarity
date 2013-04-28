@@ -46,7 +46,7 @@ before_install:
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then make build; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo make install; fi
 
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin; fi
+  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
 # Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
