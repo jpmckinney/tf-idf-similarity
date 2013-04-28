@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('unicode_utils')
   s.add_development_dependency('gsl', '~> 1.14.5')
   s.add_development_dependency('narray', '~> 0.6.0.0')
-  s.add_development_dependency('nmatrix', '~> 0.0.3')
+  s.add_development_dependency('nmatrix', '~> 0.0.3') unless RUBY_VERSION < '1.9'
   s.add_development_dependency('rspec', '~> 2.10')
   s.add_development_dependency('rake')
   s.add_development_dependency('coveralls')
