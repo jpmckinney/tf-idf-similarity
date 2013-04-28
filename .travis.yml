@@ -19,7 +19,9 @@ matrix:
 before_install:
   # https://github.com/SciRuby/nmatrix/wiki/Installation
   - sudo apt-get update -qq -y
-  - sudo apt-get install -qq -y liblapack-dev libatlas-base-dev libatlas3gf-base
+  # Can try http://sciruby.com/docs/installation/atlas.html http://ubuntuforums.org/showthread.php?t=1325671
+  # Adding liblapack-dev made no difference
+  - sudo apt-get install -qq -y libblas-dev libblas3gf libatlas-base-dev libatlas3gf-base
   # /usr/lib/libcblas.so and /usr/lib/libatlas.so already exists
   # http://stackoverflow.com/a/12029573/244258
   - curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz
