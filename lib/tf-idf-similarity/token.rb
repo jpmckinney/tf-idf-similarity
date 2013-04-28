@@ -14,16 +14,29 @@ class TfIdfSimilarity::Token < String
   #
   # @return [Boolean] whether the string is a token
   def valid?
-    !self[%r{
-      \A
-        (
-         \d           | # number
-         \p{Cntrl}    | # control character
-         \p{Punct}    | # punctuation
-         [[:space:]]    # whitespace
-        )+
-      \z
-    }x]
+    if RUBY_VERSION < '1.9'
+      !self[%r{
+        \A
+          (
+           \d           | # number
+           [[:cntrl:]]  | # control character
+           [[:punct:]]  | # punctuation
+           [[:space:]]    # whitespace
+          )+
+        \z
+      }x]
+    else
+      !self[%r{
+        \A
+          (
+           \d           | # number
+           \p{Cntrl}    | # control character
+           \p{Punct}    | # punctuation
+           \p{Space}      # whitespace
+          )+
+        \z
+      }x]
+    end
   end
 
   # @return [Token] a lowercase string

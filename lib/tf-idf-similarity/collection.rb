@@ -108,7 +108,7 @@ class TfIdfSimilarity::Collection
   # @return [Float] the term's inverse document frequency
   def inverse_document_frequency(term, opts = {})
     if opts[:function] == :bm25
-      Math.log (documents.size - document_counts[term] + 0.5) / (document_counts[term] + 0.5)
+      Math.log((documents.size - document_counts[term] + 0.5) / (document_counts[term] + 0.5))
     else
       1 + Math.log(documents.size / (document_counts[term].to_f + 1))
     end
