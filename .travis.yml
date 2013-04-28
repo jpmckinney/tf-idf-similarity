@@ -45,14 +45,8 @@ before_install:
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then ../configure -b 32 -D c -DWALL --with-netlib-lapack-tarfile=$HOME/lapack-3.4.2.tgz; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then make build; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo make install; fi
-  # http://stackoverflow.com/a/12029573/244258
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then tar xzf gsl-1.14.tar.gz; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then cd gsl-1.14; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then ./configure; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then make; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo make install; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then rvm rubygems 1.8.25; fi
-# Ruby 1.8.7 runs without Bundler
+
+  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin; fi
+# Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
