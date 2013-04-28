@@ -18,4 +18,4 @@ matrix:
       env: MATRIX_LIBRARY=nmatrix
 before_install:
   - sudo apt-get update -qq -y
-  - sudo apt-get install -qq -y gsl-bin
+  - sudo apt-get install -qq -y gsl-bin libgsl0-dev
