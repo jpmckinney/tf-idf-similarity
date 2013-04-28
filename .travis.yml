@@ -16,14 +16,18 @@ matrix:
       env: MATRIX_LIBRARY=nmatrix
     - rvm: ree
       env: MATRIX_LIBRARY=nmatrix
-# http://stackoverflow.com/a/12029573/244258
 before_install:
+  # https://github.com/SciRuby/nmatrix/wiki/Installation
+  - sudo apt-get update -qq -y
+  - sudo apt-get install -qq -y libatlas-base-dev libatlas3gf-base
+  # http://stackoverflow.com/a/12029573/244258
   - curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz
-  - tar xvzf gsl-1.14.tar.gz
+  - tar xzf gsl-1.14.tar.gz
   - cd gsl-1.14
   - ./configure
   - make
   - sudo make install
+  # http://stackoverflow.com/a/15910419/244258
   - rvm rubygems 1.8.25
   - bundle
 script:
