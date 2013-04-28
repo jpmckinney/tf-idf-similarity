@@ -18,11 +18,25 @@ matrix:
       env: MATRIX_LIBRARY=nmatrix
 before_install:
   # https://github.com/SciRuby/nmatrix/wiki/Installation
+  # @note If installing libatlas-base-dev libatlas3gf-base via apt-get,
+  # /usr/lib/libcblas.so and /usr/lib/libatlas.so will already exist.
   - sudo apt-get update -qq -y
-  # Can try http://sciruby.com/docs/installation/atlas.html http://ubuntuforums.org/showthread.php?t=1325671
-  # Adding liblapack-dev made no difference
-  - sudo apt-get install -qq -y libblas-dev libblas3gf libatlas-base-dev libatlas3gf-base
-  # /usr/lib/libcblas.so and /usr/lib/libatlas.so already exists
+  - sudo apt-get install -qq -y libblas3gf libblas-dev gfortran
+
+  - curl -O http://www.netlib.org/lapack/lapack-3.4.2.tgz
+  - curl -O http://downloads.sourceforge.net/project/math-atlas/Stable/3.10.1/atlas3.10.1.tar.bz2
+
+  # http://www.vesperix.com/arm/atlas-arm/faq/index.html
+  - for i in /sys/devices/system/cpu/cpu*; do cd $i; sudo sh -c "echo performance > scaling_governor";done
+
+  # http://math-atlas.sourceforge.net/atlas_install/node6.html
+  # http://math-atlas.sourceforge.net/atlas_install/node8.html
+  - bunzip2 -c atlas3.10.1.tar.bz2 | tar xfm -
+  - cd ATLAS
+  - ./configure -b 32 --with-netlib-lapack-tarfile=$HOME/lapack-3.4.1.tgz
+  - make build
+  - sudo make install
+
   # http://stackoverflow.com/a/12029573/244258
   - curl -O http://mirror.veriportal.com/gnu/gsl/gsl-1.14.tar.gz
   - tar xzf gsl-1.14.tar.gz
@@ -30,6 +44,7 @@ before_install:
   - ./configure
   - make
   - sudo make install
+
   # http://stackoverflow.com/a/15910419/244258
   - rvm rubygems 1.8.25
   - bundle
