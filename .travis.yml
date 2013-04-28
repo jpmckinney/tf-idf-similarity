@@ -26,8 +26,9 @@ before_install:
   # @see https://gist.github.com/jpmckinney/2eedb9a22eb47bfe9966
 
   # @todo Turn off CPU throttling.
+  # http://www.scipy.org/Installing_SciPy/Linux#head-82f9b2311041a8bda03b77e831b5b932e3be4f82
   # http://www.vesperix.com/arm/atlas-arm/faq/index.html
-  # Travis does not have those `cpu` directories.
+  # Travis does not have those `/sys/devices/system/cpu/` directories.
 
   # http://ubuntuforums.org/showthread.php?t=1325671
   # http://ubuntuforums.org/showthread.php?t=1877944
