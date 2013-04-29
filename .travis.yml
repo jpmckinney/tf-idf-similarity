@@ -19,8 +19,8 @@ matrix:
 before_install:
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get update -qq; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq libatlas-dev libatlas3gf-base; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; bundle config build.nmatrix --with-lapacklib; fi
   - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
+  - bundle config build.nmatrix --with-lapacklib
 # Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
