@@ -23,9 +23,10 @@ before_install:
   # http://sciruby.com/docs/installation/atlas.html
   # If installing libatlas-base-dev libatlas3gf-base via apt-get,
   # /usr/lib/libcblas.so and /usr/lib/libatlas.so will already exist.
+  # In any case, installing ATLAS with apt-get causes errors.
   # @see https://gist.github.com/jpmckinney/2eedb9a22eb47bfe9966
 
-  # @todo Turn off CPU throttling.
+  # @todo Is it possible to turn off CPU throttling on Travis?
   # http://www.scipy.org/Installing_SciPy/Linux#head-82f9b2311041a8bda03b77e831b5b932e3be4f82
   # http://www.vesperix.com/arm/atlas-arm/faq/index.html
   # Travis does not have those `/sys/devices/system/cpu/` directories.
@@ -45,7 +46,11 @@ before_install:
   # https://github.com/vtjnash/atlas-3.10.0/blob/master/INSTALL.txt
   # http://math-atlas.sourceforge.net/atlas_install/node8.html
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then ../configure -b 32 -D c -DWALL --with-netlib-lapack-tarfile=$HOME/lapack-3.4.2.tgz; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then make build > /dev/null; fi
+  # If we add `> /dev/null`, Travis fails with: "No output has been received in
+  # the last 10 minutes, this potentially indicates a stalled build or something
+  # wrong with the build itself." If we don't add it, Travis will sometimes
+  # terminate, because the log file is too long.
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then make build; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo make install; fi
 
   - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
