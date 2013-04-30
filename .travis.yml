@@ -19,15 +19,15 @@ matrix:
 before_install:
   - bundle config build.nmatrix --with-lapacklib
   - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get update -qq; fi
-  - test "$MATRIX_LIBRARY" = 'gsl' && sudo apt-get install gsl-bin libgsl0-dev
+  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
   # Installing ATLAS will install BLAS.
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && ORIGINAL_BUNDLE_GEMFILE=$BUNDLE_GEMFILE
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && sudo apt-get install -qq liblapack3gf liblapack-dev libatlas-dev libatlas3gf-base
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && git clone git://github.com/SciRuby/nmatrix.git
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && cd nmatrix
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && curl -O https://gist.github.com/jpmckinney/5490092/raw/6aade19baf36c33f232fae3f7e4d97f3f8e3dac6/nmatrix_for_travis.patch
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && git apply nmatrix_for_travis.patch
-  - test "$MATRIX_LIBRARY" = 'nmatrix' && BUNDLE_GEMFILE=`pwd`/Gemfile && bundle && bundle exec rake install
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then ORIGINAL_BUNDLE_GEMFILE=$BUNDLE_GEMFILE; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq liblapack3gf liblapack-dev libatlas-dev libatlas3gf-base; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then git clone git://github.com/SciRuby/nmatrix.git; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd nmatrix; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then curl -O https://gist.github.com/jpmckinney/5490092/raw/6aade19baf36c33f232fae3f7e4d97f3f8e3dac6/nmatrix_for_travis.patch; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then git apply nmatrix_for_travis.patch; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then BUNDLE_GEMFILE=`pwd`/Gemfile && bundle && bundle exec rake install; fi
 # Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
