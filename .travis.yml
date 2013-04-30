@@ -8,10 +8,26 @@ rvm:
 env:
   - MATRIX_LIBRARY=gsl
   - MATRIX_LIBRARY=narray
+  - MATRIX_LIBRARY=nmatrix
   - MATRIX_LIBRARY=matrix
+matrix:
+  exclude:
+    - rvm: 1.8.7
+      env: MATRIX_LIBRARY=nmatrix
+    - rvm: ree
+      env: MATRIX_LIBRARY=nmatrix
 before_install:
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
   - bundle config build.nmatrix --with-lapacklib
+  - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get update -qq; fi
+  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
+  # Installing ATLAS will install BLAS.
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq liblapack3gf liblapack-dev libatlas-dev libatlas3gf-base; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then git clone git://github.com/SciRuby/nmatrix.git; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd nmatrix; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then curl -O https://gist.github.com/jpmckinney/5490092/raw/6aade19baf36c33f232fae3f7e4d97f3f8e3dac6/nmatrix_for_travis.patch; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then git apply nmatrix_for_travis.patch; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then bundle; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then bundle exec rake install; fi
 # Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
