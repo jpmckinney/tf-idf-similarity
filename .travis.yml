@@ -26,7 +26,7 @@ before_install:
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then git clone git://github.com/SciRuby/nmatrix.git; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd nmatrix && ORIGINAL_BUNDLE_GEMFILE=$BUNDLE_GEMFILE; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then BUNDLE_GEMFILE=`pwd`/Gemfile && bundle && bundle exec rake package && gem install pkg/nmatrix-0.0.4.gem; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd .. && BUNDLE_GEMFILE=ORIGINAL_BUNDLE_GEMFILE; fi
+  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then cd .. && BUNDLE_GEMFILE=$ORIGINAL_BUNDLE_GEMFILE; fi
 # Travis sometimes runs without Bundler.
 install: bundle
 script: bundle exec rake --trace
