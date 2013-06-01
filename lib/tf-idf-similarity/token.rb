@@ -43,13 +43,13 @@ class TfIdfSimilarity::Token < String
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.LowerCaseFilterFactory
   def lowercase_filter
-    self.class.new UnicodeUtils.downcase(self, :fr)
+    self.class.new(UnicodeUtils.downcase(self, :fr))
   end
 
   # @return [Token] a string with no English possessive or periods in acronyms
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.ClassicFilterFactory
   def classic_filter
-    self.class.new self.gsub('.', '').chomp("'s")
+    self.class.new(self.gsub('.', '').chomp("'s"))
   end
 end

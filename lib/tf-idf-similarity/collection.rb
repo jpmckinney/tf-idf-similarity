@@ -1,4 +1,3 @@
-# @todo Do speed comparison between these gsl and narray, to load fastest first.
 begin
   require 'gsl'
 rescue LoadError
