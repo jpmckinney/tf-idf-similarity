@@ -1,15 +1,13 @@
 require 'tf-idf-similarity/document'
 
-# @todo http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
-#
 # @note The treat, tf_idf and similarity gems normalizes to the number of terms in the document.
 # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L77
 # @see https://github.com/reddavis/TF-IDF/blob/master/lib/tf_idf.rb#L76
 # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
-#
+
 # @note The tf-idf gem normalizes to the number of unique terms in the document.
 # @see https://github.com/mchung/tf-idf/blob/master/lib/tf-idf.rb#L172
-#
+
 # @see http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
 # @see http://www.cs.odu.edu/~jbollen/IR04/readings/article1-29-03.pdf
 # @see http://www.sandia.gov/~tgkolda/pubs/bibtgkfiles/ornl-tm-13756.pdf
@@ -24,7 +22,6 @@ class TfIdfSimilarity::Document
     @average_term_count ||= @term_counts.values.reduce(:+) / @term_counts.size.to_f
   end
 
-  # Returns the term count.
   # @see https://github.com/mkdynamic/vss/blob/master/lib/vss/engine.rb#L75
   # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L11
   #
@@ -34,8 +31,6 @@ class TfIdfSimilarity::Document
   end
   alias :plain_tf, :plain_term_frequency
 
-  # Returns 1 if the term is present, 0 otherwise.
-  #
   # SMART b, Salton b, Chisholm BNRY
   def binary_term_frequency(term)
     count = term_counts[term]
@@ -47,16 +42,13 @@ class TfIdfSimilarity::Document
   end
   alias_method :binary_tf, :binary_term_frequency
 
-  # Normalizes the term count by the maximum term count.
-  #
   # @see http://en.wikipedia.org/wiki/Tf*idf
-  def normalized_term_frequency(term)
-    term_counts[term] / maximum_term_count
+  # @see http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
+  def normalized_term_frequency(term, a = 0)
+    a + (1 - a) * term_counts[term] / maximum_term_count
   end
   alias_method :normalized_tf, :normalized_term_frequency
 
-  # Further normalizes the normalized term frequency to lie between 0.5 and 1.
-  #
   # SMART a, Salton n, Chisholm ATF1
   def augmented_normalized_term_frequency(term)
     0.5 + 0.5 * normalized_term_frequency(term)
