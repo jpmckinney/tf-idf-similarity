@@ -10,6 +10,7 @@ Calculates the similarity between texts using a [bag-of-words](http://en.wikiped
 
 ## Usage
 
+    require 'matrix' # or 'gsl', 'narray' or 'nmatrix'
     require 'tf-idf-similarity'
 
     corpus = TfIdfSimilarity::Collection.new
@@ -30,7 +31,7 @@ The following methods accept a `{function: :bm25}` options hash to use the [Okap
 
 ## Optimizations
 
-You can `require` one of the `gsl`, `narray` or `nmatrix` gems for faster matrix multiplication.
+Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can `require` one of the `gsl`, `narray` or `nmatrix` gems for faster matrix multiplication.
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
