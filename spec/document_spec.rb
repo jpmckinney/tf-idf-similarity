@@ -35,16 +35,6 @@ describe TfIdfSimilarity::Document do
     end
   end
 
-  describe '#tokens' do
-    it 'should return nil if no tokens given' do
-      document.tokens.should == nil
-    end
-
-    it 'should return the given tokens' do
-      document_with_tokens.tokens.should == tokens
-    end
-  end
-
   describe '#text' do
     it 'should return the text' do
       document.text.should == text
@@ -78,8 +68,6 @@ describe TfIdfSimilarity::Document do
       document_without_text.term_counts.should == {}
     end
   end
-
-"X.Y.Z. Inc.'s new product is a 123 new product \r\n\t !@#"
 
   describe '#terms' do
     it 'should return the terms if no tokens given' do

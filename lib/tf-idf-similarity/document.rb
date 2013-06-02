@@ -10,8 +10,6 @@ class TfIdfSimilarity::Document
   attr_reader :id
   # The document's text.
   attr_reader :text
-  # The document's tokenized text.
-  attr_reader :tokens
   # The number of times each term appears in the document.
   attr_reader :term_counts
   # The document size, in terms.
@@ -26,6 +24,7 @@ class TfIdfSimilarity::Document
     @id          = opts[:id] || object_id
     @tokens      = opts[:tokens]
     @term_counts = Hash.new(0)
+    @size        = 0
     process
   end
 
@@ -39,7 +38,7 @@ class TfIdfSimilarity::Document
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
   def term_frequency(term)
-    Math.sqrt(term_counts[term].to_i)
+    Math.sqrt(term_counts[term].to_i) # need #to_i if unmarshalled
   end
   alias_method :tf, :term_frequency
 
@@ -50,10 +49,11 @@ private
     tokenize(text).each do |word|
       token = TfIdfSimilarity::Token.new(word)
       if token.valid?
-        @term_counts[token.lowercase_filter.classic_filter.to_s] += 1
+        term = token.lowercase_filter.classic_filter.to_s
+        @term_counts[term] += 1
+        @size              += 1
       end
     end
-    @size = term_counts.values.reduce(0, :+)
   end
 
   # Tokenizes a text, respecting the word boundary rules from Unicode’s Default
