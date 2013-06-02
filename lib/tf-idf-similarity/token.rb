@@ -39,6 +39,8 @@ class TfIdfSimilarity::Token < String
     end
   end
 
+  # Returns a lowercase string.
+  #
   # @return [Token] a lowercase string
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.LowerCaseFilterFactory
@@ -46,6 +48,8 @@ class TfIdfSimilarity::Token < String
     self.class.new(UnicodeUtils.downcase(self, :fr))
   end
 
+  # Returns a string with no English possessive or periods in acronyms.
+  #
   # @return [Token] a string with no English possessive or periods in acronyms
   #
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.ClassicFilterFactory

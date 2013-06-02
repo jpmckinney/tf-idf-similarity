@@ -37,11 +37,15 @@ class TfIdfSimilarity::Document
     end
   end
 
-  # @return [Array<String>] the set of the document's terms with no duplicates
+  # Returns the set of terms in the document.
+  #
+  # @return [Array<String>] the unique terms in the document
   def terms
     term_counts.keys
   end
-  
+
+  # Returns the term's frequency in the document.
+  #
   # @param [String] term a term
   # @return [Float] the square root of the term count
   #
