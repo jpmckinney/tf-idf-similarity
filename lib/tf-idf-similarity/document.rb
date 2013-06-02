@@ -51,9 +51,18 @@ class TfIdfSimilarity::Document
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
   def term_frequency(term)
-    Math.sqrt(term_counts[term].to_i) # need #to_i if unmarshalled
+    Math.sqrt(plain_term_frequency(term))
   end
   alias_method :tf, :term_frequency
+
+  # Returns the number of occurrences of the term in the document.
+  #
+  # @param [String] term a term
+  # @return [Integer] the number of occurrences of the term in the document
+  def plain_term_frequency(term)
+    term_counts[term].to_i # need #to_i if unmarshalled
+  end
+  alias_method :plain_tf, :plain_term_frequency
 
 private
 
