@@ -51,8 +51,6 @@ class TfIdfSimilarity::Document
   def term_count(term)
     term_counts[term].to_i # need #to_i if unmarshalled
   end
-  alias_method :plain_term_frequency, :term_count
-  alias_method :plain_tf, :term_count
 
 private
 
