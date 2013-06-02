@@ -53,6 +53,12 @@ describe TfIdfSimilarity::TermCountModel do
         model.document_count('xxx').should == 0
       end
     end
+
+    describe '#term_count' do
+      it 'should be zero' do
+        model.term_count('xxx').should == 0
+      end
+    end
   end
 
   context 'with documents' do
@@ -90,6 +96,12 @@ describe TfIdfSimilarity::TermCountModel do
     describe '#document_count' do
       it 'should return the number of documents the term appears in' do
         model.document_count('bar').should == 3
+      end
+    end
+
+    describe '#term_count' do
+      it 'should return the number of times the term appears in the corpus' do
+        model.term_count('bar').should == 9
       end
     end
   end

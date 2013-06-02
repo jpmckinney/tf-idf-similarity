@@ -49,4 +49,22 @@ class TfIdfSimilarity::TermCountModel
       0
     end
   end
+
+  # @param [String] term a term
+  # @return [Integer] the number of times the term appears in the corpus
+  def term_count(term)
+    index = terms.index(term)
+    if index
+      case @library
+      when :gsl, :narray
+        row(index).sum
+      when :nmatrix
+        row(index).each.reduce(0, :+)
+      else
+        row(index).reduce(0, :+)
+      end
+    else
+      0
+    end
+  end
 end
