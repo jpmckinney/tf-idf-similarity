@@ -115,24 +115,6 @@ describe TfIdfSimilarity::Document do
     end
   end
 
-  describe '#term_frequency' do
-    it 'should return the term frequency if no tokens given' do
-      document.term_frequency('foo').should == Math.sqrt(2)
-    end
-
-    it 'should return the term frequency if tokens given' do
-      document_with_tokens.term_frequency('foo-foo').should == 1
-    end
-
-    it 'should return no term frequency if no text given' do
-      document_without_text.term_frequency('foo').should == 0
-    end
-
-    it 'should return the term frequency if term counts given' do
-      document_with_term_counts.term_frequency('bar').should == Math.sqrt(5)
-    end
-  end
-
   describe '#plain_term_frequency' do
     it 'should return the term count if no tokens given' do
       document.plain_term_frequency('foo').should == 2

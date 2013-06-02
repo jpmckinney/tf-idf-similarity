@@ -6,7 +6,7 @@ rescue LoadError
 end
 
 class TfIdfSimilarity::Document
-  # An optional document identifier.
+  # The document's identifier.
   attr_reader :id
   # The document's text.
   attr_reader :text
@@ -17,14 +17,14 @@ class TfIdfSimilarity::Document
 
   # @param [String] text the document's text
   # @param [Hash] opts optional arguments
-  # @option opts [String] :id a string to identify the document
+  # @option opts [String] :id the document's identifier
   # @option opts [Array] :tokens the document's tokenized text
   # @option opts [Hash] :term_counts the number of times each term appears
   # @option opts [Integer] :size the number of tokens in the document
   def initialize(text, opts = {})
-    @text        = text
-    @id          = opts[:id] || object_id
-    @tokens      = opts[:tokens]
+    @text   = text
+    @id     = opts[:id] || object_id
+    @tokens = opts[:tokens]
 
     if opts[:term_counts]
       @term_counts = opts[:term_counts]
@@ -44,21 +44,10 @@ class TfIdfSimilarity::Document
     term_counts.keys
   end
 
-  # Returns the term's frequency in the document.
-  #
-  # @param [String] term a term
-  # @return [Float] the square root of the term count
-  #
-  # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
-  def term_frequency(term)
-    Math.sqrt(plain_term_frequency(term))
-  end
-  alias_method :tf, :term_frequency
-
   # Returns the number of occurrences of the term in the document.
   #
   # @param [String] term a term
-  # @return [Integer] the number of occurrences of the term in the document
+  # @return [Integer] the number of times the term appears in the document
   def plain_term_frequency(term)
     term_counts[term].to_i # need #to_i if unmarshalled
   end
@@ -66,14 +55,14 @@ class TfIdfSimilarity::Document
 
 private
 
-  # Tokenizes the text and counts terms.
+  # Tokenizes the text and counts terms and total tokens.
   def set_term_counts_and_size
     tokenize(text).each do |word|
       token = TfIdfSimilarity::Token.new(word)
       if token.valid?
         term = token.lowercase_filter.classic_filter.to_s
         @term_counts[term] += 1
-        @size              += 1
+        @size += 1
       end
     end
   end
