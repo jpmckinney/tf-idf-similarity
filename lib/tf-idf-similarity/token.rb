@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# A token.
+#
 # @note We can add more filters from Solr and stem using Porter's Snowball.
 #
 # @see https://github.com/aurelian/ruby-stemmer
