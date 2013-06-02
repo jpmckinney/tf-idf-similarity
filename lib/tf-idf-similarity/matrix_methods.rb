@@ -7,21 +7,33 @@ private
   def normalize
     case @library
     when :gsl
-      @matrix.clone.each_col(&:normalize!)
+      @matrix.clone.each_col do |column|
+        unless column.isnull?
+          column.normalize!
+        end
+      end
     when :narray # @see https://github.com/masa16/narray/issues/21
-      NArray.refer(@matrix / NMath.sqrt((@matrix ** 2).sum(1).reshape(@matrix.shape[0], 1)))
+      norm = NMath.sqrt((@matrix ** 2).sum(1).reshape(@matrix.shape[0], 1))
+      norm[norm.where2[1]] = 1.0 # avoid division by zero
+      NArray.refer(@matrix / norm)
     when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/38
       normal = NMatrix.new(:dense, @matrix.shape, :float64)
       (0...@matrix.shape[1]).each do |j|
         column = @matrix.column(j)
         norm = Math.sqrt(column.transpose.dot(column)[0, 0])
         (0...@matrix.shape[0]).each do |i|
-          normal[i, j] = @matrix[i, j] / norm
+          normal[i, j] = norm.zero? ? 0 : @matrix[i, j] / norm
         end
       end
       normal
     else
-      Matrix.columns(@matrix.column_vectors.map(&:normalize))
+      Matrix.columns(@matrix.column_vectors.map do |column|
+        if column.to_a.all?(&:zero?)
+          column
+        else
+          column.normalize
+        end
+      end)
     end
   end
 
