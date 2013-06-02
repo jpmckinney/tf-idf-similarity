@@ -10,28 +10,32 @@ Calculates the similarity between texts using a [bag-of-words](http://en.wikiped
 
 ## Usage
 
-    require 'matrix' # or 'gsl', 'narray' or 'nmatrix'
+    require 'matrix'
     require 'tf-idf-similarity'
 
-    corpus = TfIdfSimilarity::Collection.new
+Create a set of documents:
+
+    corpus = []
     corpus << TfIdfSimilarity::Document.new("Lorem ipsum dolor sit amet...")
     corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
     corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
 
-    p corpus.similarity_matrix
+Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/) (default:
 
-The following methods accept a `{function: :bm25}` options hash to use the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25) instead of tf*idf:
+    model = TfIdfSimilarity::TfIdfModel(corpus, :function => :tf_idf)
 
-* `term_frequency`
-* `inverse_document_frequency`
-* `term_frequency_inverse_document_frequency`
-* `similarity_matrix`
+Create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
+
+    model = TfIdfSimilarity::TfIdfModel(corpus, :function => :bm25)
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
-## Optimizations
+## Speed
 
-Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can `require` one of the `gsl`, `narray` or `nmatrix` gems for faster matrix multiplication.
+Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the `gsl`, `narray` or `nmatrix` gems for faster matrix operations, e.g.:
+
+    require 'gsl'
+    model = TfIdfSimilarity::TfIdfModel(corpus, :library => :gsl)
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 
