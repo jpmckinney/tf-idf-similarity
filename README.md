@@ -53,8 +53,8 @@ The nmatrix gem gives access to [Automatically Tuned Linear Algebra Software (AT
 
 You can access more term frequency, document frequency, and normalization formulas with:
 
-    require 'tf-idf-similarity/extras/collection'
     require 'tf-idf-similarity/extras/document'
+    require 'tf-idf-similarity/extras/tf_idf_model'
 
 The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
