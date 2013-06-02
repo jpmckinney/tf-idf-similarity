@@ -47,6 +47,12 @@ describe TfIdfSimilarity::TermCountModel do
         model.average_document_size.should == 0
       end
     end
+
+    describe '#document_count' do
+      it 'should be zero' do
+        model.document_count('xxx').should == 0
+      end
+    end
   end
 
   context 'with documents' do
@@ -78,6 +84,12 @@ describe TfIdfSimilarity::TermCountModel do
     describe '#average_document_size' do
       it 'should return the average number of tokens in a document' do
         model.average_document_size.should == 5.5
+      end
+    end
+
+    describe '#document_count' do
+      it 'should return the number of documents the term appears in' do
+        model.document_count('bar').should == 3
       end
     end
   end

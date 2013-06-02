@@ -32,8 +32,6 @@ class TfIdfSimilarity::TermCountModel
     @average_document_size = documents.empty? ? 0 : sum / column_size.to_f
   end
 
-private
-
   # @param [String] term a term
   # @return [Integer] the number of documents the term appears in
   def document_count(term)
