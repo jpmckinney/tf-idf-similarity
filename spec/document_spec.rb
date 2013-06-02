@@ -115,21 +115,21 @@ describe TfIdfSimilarity::Document do
     end
   end
 
-  describe '#plain_term_frequency' do
+  describe '#term_count' do
     it 'should return the term count if no tokens given' do
-      document.plain_term_frequency('foo').should == 2
+      document.term_count('foo').should == 2
     end
 
     it 'should return the term count if tokens given' do
-      document_with_tokens.plain_term_frequency('foo-foo').should == 1
+      document_with_tokens.term_count('foo-foo').should == 1
     end
 
     it 'should return no term count if no text given' do
-      document_without_text.plain_term_frequency('foo').should == 0
+      document_without_text.term_count('foo').should == 0
     end
 
     it 'should return the term count if term counts given' do
-      document_with_term_counts.plain_term_frequency('bar').should == 5
+      document_with_term_counts.term_count('bar').should == 5
     end
   end
 end

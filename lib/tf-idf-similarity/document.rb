@@ -48,10 +48,11 @@ class TfIdfSimilarity::Document
   #
   # @param [String] term a term
   # @return [Integer] the number of times the term appears in the document
-  def plain_term_frequency(term)
+  def term_count(term)
     term_counts[term].to_i # need #to_i if unmarshalled
   end
-  alias_method :plain_tf, :plain_term_frequency
+  alias_method :plain_term_frequency, :term_count
+  alias_method :plain_tf, :term_count
 
 private
 

@@ -25,7 +25,7 @@ class TfIdfSimilarity::Document
 
   # SMART b, Salton b, Chisholm BNRY
   def binary_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       1
     else
@@ -37,7 +37,7 @@ class TfIdfSimilarity::Document
   # @see http://en.wikipedia.org/wiki/Tf*idf
   # @see http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
   def normalized_term_frequency(term, a = 0)
-    a + (1 - a) * plain_term_frequency(term) / maximum_term_count
+    a + (1 - a) * term_count(term) / maximum_term_count
   end
   alias_method :normalized_tf, :normalized_term_frequency
 
@@ -49,7 +49,7 @@ class TfIdfSimilarity::Document
 
   # Chisholm ATFA
   def augmented_average_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       0.9 + 0.1 * count / average_term_count
     else
@@ -60,7 +60,7 @@ class TfIdfSimilarity::Document
 
   # Chisholm ATFC
   def changed_coefficient_augmented_normalized_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       0.2 + 0.8 * count / maximum_term_count
     else
@@ -73,7 +73,7 @@ class TfIdfSimilarity::Document
   #
   # SMART l, Chisholm LOGA
   def log_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       1 + Math.log(count)
     else
@@ -84,7 +84,7 @@ class TfIdfSimilarity::Document
 
   # SMART L, Chisholm LOGN
   def normalized_log_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       (1 + Math.log(count)) / (1 + Math.log(average_term_count))
     else
@@ -95,7 +95,7 @@ class TfIdfSimilarity::Document
 
   # Chisholm LOGG
   def augmented_log_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       0.2 + 0.8 * Math.log(count + 1)
     else
@@ -106,7 +106,7 @@ class TfIdfSimilarity::Document
 
   # Chisholm SQRT
   def square_root_term_frequency(term)
-    count = plain_term_frequency(term)
+    count = term_count(term)
     if count > 0
       Math.sqrt(count - 0.5) + 1
     else
