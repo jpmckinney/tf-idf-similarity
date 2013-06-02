@@ -12,20 +12,29 @@ class TfIdfSimilarity::Document
   attr_reader :text
   # The number of times each term appears in the document.
   attr_reader :term_counts
-  # The document size, in terms.
+  # The number of tokens in the document.
   attr_reader :size
 
   # @param [String] text the document's text
   # @param [Hash] opts optional arguments
   # @option opts [String] :id a string to identify the document
   # @option opts [Array] :tokens the document's tokenized text
+  # @option opts [Hash] :term_counts the number of times each term appears
+  # @option opts [Integer] :size the number of tokens in the document
   def initialize(text, opts = {})
     @text        = text
     @id          = opts[:id] || object_id
     @tokens      = opts[:tokens]
-    @term_counts = Hash.new(0)
-    @size        = 0
-    process
+
+    if opts[:term_counts]
+      @term_counts = opts[:term_counts]
+      @size = opts[:size] || term_counts.values.reduce(0, :+)
+      # Nothing to do.
+    else
+      @term_counts = Hash.new(0)
+      @size = 0
+      set_term_counts_and_size
+    end
   end
 
   # @return [Array<String>] the set of the document's terms with no duplicates
@@ -44,8 +53,8 @@ class TfIdfSimilarity::Document
 
 private
 
-  # Tokenize the text and counts terms.
-  def process
+  # Tokenizes the text and counts terms.
+  def set_term_counts_and_size
     tokenize(text).each do |word|
       token = TfIdfSimilarity::Token.new(word)
       if token.valid?

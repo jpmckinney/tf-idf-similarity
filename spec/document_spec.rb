@@ -25,6 +25,18 @@ describe TfIdfSimilarity::Document do
     TfIdfSimilarity::Document.new(text, :tokens => tokens)
   end
 
+  let :document_with_term_counts do
+    TfIdfSimilarity::Document.new(text, :term_counts => {'foo' => 5, 'bar' => 10})
+  end
+
+  let :document_with_term_counts_and_size do
+    TfIdfSimilarity::Document.new(text, :term_counts => {'foo' => 5, 'bar' => 10}, :size => 20)
+  end
+
+  let :document_with_size do
+    TfIdfSimilarity::Document.new(text, :size => 10)
+  end
+
   describe '#id' do
     it 'should return the ID if no ID given' do
       document.id.should be_an(Integer)
@@ -42,16 +54,28 @@ describe TfIdfSimilarity::Document do
   end
 
   describe '#size' do
-    it 'should return the number of terms if no tokens given' do
+    it 'should return the number of tokens if no tokens given' do
       document.size.should == 4
     end
 
-    it 'should return the number of terms if tokens given' do
+    it 'should return the number of tokens if tokens given' do
       document_with_tokens.size.should == 3
     end
 
-    it 'should return the number of terms if no text given' do
+    it 'should return the number of tokens if no text given' do
       document_without_text.size.should == 0
+    end
+
+    it 'should return the number of tokens if term counts given' do
+      document_with_term_counts.size.should == 15
+    end
+
+    it 'should return the given number of tokens if term counts and size given' do
+      document_with_term_counts_and_size.size.should == 20
+    end
+
+    it 'should not return the given number of tokens if term counts not given' do
+      document_with_size.size.should_not == 10
     end
   end
 
@@ -66,6 +90,10 @@ describe TfIdfSimilarity::Document do
 
     it 'should return no term counts if no text given' do
       document_without_text.term_counts.should == {}
+    end
+
+    it 'should return the term counts if term counts given' do
+      document_with_term_counts.term_counts.should == {'foo' => 5, 'bar' => 10}
     end
   end
 
