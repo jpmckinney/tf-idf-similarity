@@ -30,7 +30,7 @@ The following methods accept a `{function: :bm25}` options hash to use the [Okap
 
 ## Optimizations
 
-This gem will use the first available library below, for faster matrix multiplication.
+You can `require` one of the `gsl`, `narray` or `nmatrix` gems for faster matrix multiplication.
 
 ### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
 

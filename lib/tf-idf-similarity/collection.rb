@@ -1,17 +1,3 @@
-begin
-  require 'gsl'
-rescue LoadError
-  begin
-    require 'narray'
-  rescue LoadError
-    begin
-      require 'nmatrix'
-    rescue LoadError
-      require 'matrix'
-    end
-  end
-end
-
 class TfIdfSimilarity::Collection
   class CollectionError < StandardError; end
 
@@ -24,8 +10,8 @@ class TfIdfSimilarity::Collection
 
   def initialize
     @documents       = []
-    @term_counts     = Hash.new 0
-    @document_counts = Hash.new 0
+    @term_counts     = Hash.new(0)
+    @document_counts = Hash.new(0)
   end
 
   def <<(document)
@@ -82,10 +68,10 @@ class TfIdfSimilarity::Collection
     # Columns are normalized to unit vectors, so we can calculate the cosine
     # similarity of all document vectors. BM25 doesn't normalize columns, but
     # BM25 wasn't written with this use case in mind.
-    matrix = normalize matrix
+    matrix = normalize(matrix)
 
     if nmatrix?
-      matrix.transpose.dot matrix
+      matrix.transpose.dot(matrix)
     else
       matrix.transpose * matrix
     end
@@ -125,7 +111,7 @@ class TfIdfSimilarity::Collection
     if opts[:function] == :bm25
       (document.term_counts[term].to_i * 2.2) / (document.term_counts[term].to_i + 0.3 + 0.9 * document.size / average_document_size)
     else
-      document.term_frequency term
+      document.term_frequency(term)
     end
   end
   alias_method :tf, :term_frequency
@@ -136,7 +122,7 @@ class TfIdfSimilarity::Collection
       raise CollectionError, "No documents in collection"
     end
 
-    @average_document_size ||= documents.map(&:size).reduce(:+) / documents.size.to_f
+    @average_document_size ||= documents.map(&:size).reduce(0, :+) / documents.size.to_f
   end
 
   # Resets the average document size.
@@ -166,9 +152,9 @@ class TfIdfSimilarity::Collection
           m[i, j] /= norm
         end
       end
-      matrix.cast :yale, :float64
+      matrix.cast(:yale, :float64)
     else
-      Matrix.columns matrix.column_vectors.map(&:normalize)
+      Matrix.columns(matrix.column_vectors.map(&:normalize))
     end
   end
 
@@ -177,9 +163,9 @@ private
   # @return a matrix
   def initialize_matrix
     if gsl?
-      GSL::Matrix.alloc terms.size, documents.size
+      GSL::Matrix.alloc(terms.size, documents.size)
     elsif narray?
-      NArray.float documents.size, terms.size
+      NArray.float(documents.size, terms.size)
     elsif nmatrix?
       NMatrix.new(:list, [terms.size, documents.size], :float64)
     end
