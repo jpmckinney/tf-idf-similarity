@@ -35,7 +35,7 @@ class TfIdfSimilarity::Collection
 
   # Chisholm IGFF
   def global_frequency_inverse_document_frequency(term)
-    term_counts[term] / document_counts[term].to_f
+    term_counts[term].to_i / document_counts[term].to_f
   end
   alias_method :gfidf, :global_frequency_inverse_document_frequency
 
@@ -62,7 +62,7 @@ class TfIdfSimilarity::Collection
     denominator = term_counts[term].to_f
     logN = Math.log(documents.size)
     1 + documents.reduce(0) do |sum,document|
-      quotient = document.term_counts[term] / denominator
+      quotient = document.plain_term_frequency(term) / denominator
       sum += quotient * Math.log(quotient) / logN
     end
   end
