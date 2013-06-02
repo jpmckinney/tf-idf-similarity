@@ -1,12 +1,8 @@
 require 'tf-idf-similarity/document'
 
-# @note The treat, tf_idf and similarity gems normalizes to the number of terms in the document.
+# @note The treat and similarity gems normalizes to the number of tokens in the document.
 # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L77
-# @see https://github.com/reddavis/TF-IDF/blob/master/lib/tf_idf.rb#L76
 # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
-
-# @note The tf-idf gem normalizes to the number of unique terms in the document.
-# @see https://github.com/mchung/tf-idf/blob/master/lib/tf-idf.rb#L172
 
 # @see http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
 # @see http://www.cs.odu.edu/~jbollen/IR04/readings/article1-29-03.pdf
@@ -19,7 +15,7 @@ class TfIdfSimilarity::Document
 
   # @return [Float] the average term count of all terms in the document
   def average_term_count
-    @average_term_count ||= @term_counts.values.reduce(:+) / @term_counts.size.to_f
+    @average_term_count ||= @term_counts.values.reduce(0, :+) / @term_counts.size.to_f
   end
 
   # @see https://github.com/mkdynamic/vss/blob/master/lib/vss/engine.rb#L75
@@ -29,7 +25,7 @@ class TfIdfSimilarity::Document
   def plain_term_frequency(term)
     term_counts[term]
   end
-  alias :plain_tf, :plain_term_frequency
+  alias_method :plain_tf, :plain_term_frequency
 
   # SMART b, Salton b, Chisholm BNRY
   def binary_term_frequency(term)

@@ -4,9 +4,6 @@ require 'tf-idf-similarity/collection'
 # @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L16
 # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/corpus.rb#L44
 
-# @note The tf-idf gem adds one to the numerator when calculating inverse document frequency.
-# @see https://github.com/mchung/tf-idf/blob/master/lib/tf-idf.rb#L153
-
 # @note The vss gem does not take the logarithm of the inverse document frequency.
 # @see https://github.com/mkdynamic/vss/blob/master/lib/vss/engine.rb#L79
 
@@ -24,8 +21,8 @@ class TfIdfSimilarity::Collection
   # @see https://github.com/reddavis/TF-IDF/blob/master/lib/tf_idf.rb#L50
   #
   # SMART t, Salton f, Chisholm IDFB
-  def plain_inverse_document_frequency(term)
-    Math.log(documents.size / document_counts[term].to_f)
+  def plain_inverse_document_frequency(term, numerator = 0, denominator = 0)
+    Math.log((documents.size + numerator) / (document_counts[term].to_f + denominator))
   end
   alias_method :plain_idf, :plain_inverse_document_frequency
 
