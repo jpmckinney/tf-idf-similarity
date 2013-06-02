@@ -25,7 +25,7 @@ class TfIdfSimilarity::Document
     @text        = text
     @id          = opts[:id] || object_id
     @tokens      = opts[:tokens]
-    @term_counts = Hash.new 0
+    @term_counts = Hash.new(0)
     process
   end
 
@@ -39,7 +39,7 @@ class TfIdfSimilarity::Document
   #
   # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
   def term_frequency(term)
-    Math.sqrt term_counts[term].to_i
+    Math.sqrt(term_counts[term].to_i)
   end
   alias_method :tf, :term_frequency
 
@@ -48,12 +48,12 @@ private
   # Tokenize the text and counts terms.
   def process
     tokenize(text).each do |word|
-      token = TfIdfSimilarity::Token.new word
+      token = TfIdfSimilarity::Token.new(word)
       if token.valid?
         @term_counts[token.lowercase_filter.classic_filter.to_s] += 1
       end
     end
-    @size = term_counts.values.reduce(:+)
+    @size = term_counts.values.reduce(0, :+)
   end
 
   # Tokenizes a text, respecting the word boundary rules from Unicode’s Default
@@ -71,6 +71,6 @@ private
   # @see http://unicode.org/reports/tr29/#Default_Word_Boundaries
   # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StandardTokenizerFactory
   def tokenize(text)
-    @tokens || defined?(UnicodeUtils) && UnicodeUtils.each_word(text) || text.split(/[[:space:]]+/) # @todo Ruby 1.8.7 has no good word boundary code
+    @tokens || defined?(UnicodeUtils) && UnicodeUtils.each_word(text) || text.split(/\b/) # @todo Ruby 1.8.7 has no good word boundary code
   end
 end
