@@ -123,7 +123,7 @@ private
     when :narray
       NArray[*array]
     when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/91
-      NMatrix.new(:dense, [array.size, array[0].size], array.flatten)
+      NMatrix.new(:dense, [array.size, array.empty? ? 0 : array[0].size], array.flatten)
     else
       Matrix[*array]
     end
