@@ -4,68 +4,16 @@ require 'tf-idf-similarity/extras/document'
 require 'tf-idf-similarity/extras/tf_idf_model'
 
 describe TfIdfSimilarity::TfIdfModel do
-  # @see https://github.com/bbcrd/Similarity/blob/master/test/test_document.rb
-  # @see https://github.com/bbcrd/Similarity/blob/master/test/test_term_document_matrix.rb
-  context 'comparing to similarity gem' do
-    let :document do
-      TfIdfSimilarity::Document.new('cow cow cow horse horse elephant')
-    end
+  def build_document(text, opts = {})
+    TfIdfSimilarity::Document.new(text, opts)
+  end
 
-    let :model do
-      TfIdfSimilarity::TfIdfModel.new([
-        TfIdfSimilarity::Document.new("cow horse sheep"),
-        TfIdfSimilarity::Document.new("horse bird dog"),
-      ], :library => MATRIX_LIBRARY)
-    end
-
-    # Normalizes to the number of tokens in the document.
-    # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
-    def tf(term)
-      document.term_count(term) / document.size.to_f
-    end
-
-    # Does not add one to the inverse document frequency.
-    # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/corpus.rb#L44
-    def idf
-
-    end
-
-    it 'should return the terms' do
-      [ "the quick brown fox",
-        "the quick     brown   fox",
-        "The Quick Brown Fox",
-        'The, Quick! Brown. "Fox"',
-      ].each do |text|
-        TfIdfSimilarity::Document.new(text).terms.sort.should == ["brown", "fox", "quick", "the"]
-      end
-    end
-
-    it 'should return the number of documents' do
-      model.documents.size.should == 2
-    end
-
-    it 'should return the number of terms' do
-      document.terms.size.should == 3
-      model.terms.size.should == 5
-    end
-
-    it 'should return the term frequency' do
-      tf('cow').should == 0.5
-      tf('horse').should be_within(0.001).of(0.333)
-      tf('sheep').should == 0
-    end
-
-    it 'should return the similarity matrix' do
-      matrix = model.similarity_matrix
-      matrix[0, 0].should be_within(0.001).of(1.0)
-      pending
-    end
+  def build_model(documents)
+    TfIdfSimilarity::TfIdfModel.new(documents, :library => MATRIX_LIBRARY)
   end
 
   # @see https://github.com/josephwilk/rsemantic/blob/master/spec/semantic/transform/tf_idf_transform_spec.rb
-  context 'comparing to rsemantic gem' do
-    pending
-  end
+  # No relevant tests to reproduce.
 
   # @see https://github.com/mkdynamic/vss/blob/master/test/test.rb
   context 'comparing to vss gem' do
@@ -76,15 +24,96 @@ describe TfIdfSimilarity::TfIdfModel do
         "Lost is surely not in the same league as The Wire.",
         "You cannot compare the The Wire and Lost.",
       ].map do |text|
-        TfIdfSimilarity::Document.new(text)
+        build_document(text)
       end
     end
 
     let :model do
-      TfIdfSimilarity::TfIdfModel.new(documents, :library => MATRIX_LIBRARY)
+      build_model(documents)
     end
 
-    pending
+    pending "Add TfIdfSimilarity::TfIdfModel#search"
+  end
+
+  # @see https://github.com/bbcrd/Similarity/blob/master/test/test_corpus.rb
+  # @see https://github.com/bbcrd/Similarity/blob/master/test/test_document.rb
+  # @see https://github.com/bbcrd/Similarity/blob/master/test/test_term_document_matrix.rb
+  context 'comparing to similarity gem' do
+    let :document do
+      TfIdfSimilarity::Document.new('cow cow cow horse horse elephant')
+    end
+
+    def build_model_from_text(*texts)
+      build_model(texts.map{|text| build_document(text)})
+    end
+
+    let :model_a do
+      build_model_from_text("cow horse sheep", "horse bird dog")
+    end
+
+    let :model_b do
+      build_model_from_text("cow cow cow bird", "horse horse horse bird")
+    end
+
+    let :model_c do
+      build_model_from_text("cow cow cow", "horse horse horse")
+    end
+
+    # Normalizes to the number of tokens in the document.
+    # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
+    def tf(term)
+      document.term_count(term) / document.size.to_f
+    end
+
+    # Does not add one to the inverse document frequency.
+    # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/corpus.rb#L44
+    def idf(model, term)
+      model.plain_idf(term, 0, 1)
+    end
+
+    it 'should return the terms' do
+      [ "the quick brown fox",
+        "the quick     brown   fox",
+        "The Quick Brown Fox",
+        'The, Quick! Brown. "Fox"',
+      ].each do |text|
+        build_document(text).terms.sort.should == ["brown", "fox", "quick", "the"]
+      end
+    end
+
+    it 'should return the number of documents' do
+      model_a.documents.size.should == 2
+    end
+
+    it 'should return the number of terms' do
+      document.terms.size.should == 3
+      model_a.terms.size.should == 5
+    end
+
+    it 'should return the term frequency' do
+      tf('cow').should == 0.5
+      tf('horse').should be_within(0.001).of(0.333)
+      tf('sheep').should == 0
+    end
+
+    it 'should return the similarity matrix' do
+      pending "Calculate the tf*idf matrix like the similarity gem does"
+    end
+
+    it 'should return the number of documents in which a term appears' do
+      model_b.document_count('cow').should == 1
+      model_b.document_count('horse').should == 1
+      model_b.document_count('bird').should == 2
+    end
+
+    it 'should return the inverse document frequency' do
+      idf(model_c, 'cow').should be_within(0.001).of(0.0)
+      idf(model_c, 'bird').should be_within(0.001).of(0.693)
+    end
+
+    it 'should return the document vector' do
+      pending "Calculate the tf*idf matrix like the similarity gem does"
+    end
   end
 
   # @see https://github.com/mchung/tf-idf/blob/master/spec/tf-idf_spec.rb
@@ -101,7 +130,7 @@ describe TfIdfSimilarity::TfIdfModel do
         text << 'phone' if n <= 2
         text << 'girl' if n <= 1
         text << 'moon' if n <= 1
-        TfIdfSimilarity::Document.new(text * ' ')
+        build_document(text * ' ')
       end
     end
 
@@ -113,16 +142,16 @@ describe TfIdfSimilarity::TfIdfModel do
         text << 'said' if n <= 5
         text << 'phone' if n <= 2
         text << 'girl' if n <= 1
-        TfIdfSimilarity::Document.new(text * ' ')
+        build_document(text * ' ')
       end
     end
 
     let :model_a do
-      TfIdfSimilarity::TfIdfModel.new(corpus_a, :library => MATRIX_LIBRARY)
+      build_model(corpus_a)
     end
 
     let :model_b do
-      TfIdfSimilarity::TfIdfModel.new(corpus_b, :library => MATRIX_LIBRARY)
+      build_model(corpus_b)
     end
 
     it 'should return the number of documents' do
@@ -152,27 +181,24 @@ describe TfIdfSimilarity::TfIdfModel do
       model_a.plain_idf('moon', 1, 1).should be_within(0.001).of(3.238) # 3.23867845216438
       model_a.plain_idf('said', 1, 1).should be_within(0.001).of(2.140) # 2.14006616349627
 
-      model = TfIdfSimilarity::TfIdfModel.new(corpus_a + [
-        TfIdfSimilarity::Document.new('water moon'),
-      ], :library => MATRIX_LIBRARY)
+      model = build_model(corpus_a + [build_document('water moon')])
 
       model.plain_idf('water', 1, 1).should be_within(0.001).of(3.258) # 3.25809653802148
       model.plain_idf('moon', 1, 1).should be_within(0.001).of(2.852) # 2.85263142991332
       model.plain_idf('said', 1, 1).should be_within(0.001).of(2.159) # 2.15948424935337
 
       # should add input documents to an empty corpus
-      model_c = TfIdfSimilarity::TfIdfModel.new([
-      ], :library => MATRIX_LIBRARY)
+      model_c = build_model([])
 
       default = model_c.plain_idf('xxx', 1, 1)
       model_c.plain_idf('moon', 1, 1).should == default
       model_c.plain_idf('water', 1, 1).should == default
       model_c.plain_idf('said', 1, 1).should == default
 
-      model_d = TfIdfSimilarity::TfIdfModel.new([
-        TfIdfSimilarity::Document.new('moon'),
-        TfIdfSimilarity::Document.new('moon said hello'),
-      ], :library => MATRIX_LIBRARY)
+      model_d = build_model([
+        build_document('moon'),
+        build_document('moon said hello'),
+      ])
 
       default = model_d.plain_idf('xxx', 1, 1)
       model_d.plain_idf('water', 1, 1).should == default
@@ -185,9 +211,9 @@ describe TfIdfSimilarity::TfIdfModel do
       model_b.plain_idf('moon', 1, 1).should == default # returns 0 for stopwords
       model_b.plain_idf('said', 1, 1).should == be_within(0.001).of(2.140) # 2.14006616349627
 
-      model_e = TfIdfSimilarity::TfIdfModel.new(corpus_b + [
-        TfIdfSimilarity::Document.new('moon', :tokens => %w()),
-        TfIdfSimilarity::Document.new('moon and water', :tokens => %w(and water)),
+      model_e = build_model(corpus_b + [
+        build_document('moon', :tokens => %w()),
+        build_document('moon and water', :tokens => %w(and water)),
       ])
 
       default = model_e.plain_idf('xxx', 1, 1)
@@ -200,15 +226,15 @@ describe TfIdfSimilarity::TfIdfModel do
   # @see https://github.com/reddavis/TF-IDF/blob/master/spec/tf_idf_spec.rb
   context 'comparing to tf_idf gem' do
     let :one do
-      TfIdfSimilarity::Document.new('a a a a a a a a b b')
+      build_document('a a a a a a a a b b')
     end
 
     let :two do
-      TfIdfSimilarity::Document.new('a a')
+      build_document('a a')
     end
 
     let :model do
-      TfIdfSimilarity::TfIdfModel.new([one, two], :library => MATRIX_LIBRARY)
+      build_model([one, two])
     end
 
     # Normalizes to the number of tokens in the document.

@@ -7,7 +7,7 @@ class TfIdfSimilarity::TfIdfModel
   include TfIdfSimilarity::MatrixMethods
 
   extend Forwardable
-  def_delegators :@model, :documents, :terms
+  def_delegators :@model, :documents, :terms, :document_count
 
   # @param [Array<TfIdfSimilarity::Document>] documents documents
   # @param [Hash] opts optional arguments
