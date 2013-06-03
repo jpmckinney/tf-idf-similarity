@@ -37,6 +37,17 @@ private
     end
   end
 
+  # @param [Integer] row index
+  # @param [Integer] column index
+  def get(i, j)
+    case @library
+    when :narray
+      @matrix[j, i]
+    else
+      @matrix[i, j]
+    end
+  end
+
   # @param [Integer] index the row index
   # @return [GSL::Vector::View,NArray,NMatrix,Vector] a row
   def row(index)

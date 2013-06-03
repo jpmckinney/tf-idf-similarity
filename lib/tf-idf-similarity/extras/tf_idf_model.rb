@@ -1,12 +1,10 @@
-# @note The treat and similarity gems do not add one to the inverse document frequency.
-# @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L16
-# @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/corpus.rb#L44
-
 # @note The vss gem does not take the logarithm of the inverse document frequency.
 # @see https://github.com/mkdynamic/vss/blob/master/lib/vss/engine.rb#L79
 
-# @note The treat and similarity gems normalizes to the number of tokens in the document.
-# @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L77
+# @note The treat gem does not add one to the inverse document frequency.
+# @see https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L16
+
+# @note The treat gem normalizes to the number of tokens in the document.
 # @see https://github.com/bbcrd/Similarity/blob/master/lib/similarity/document.rb#L42
 
 # @see http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html

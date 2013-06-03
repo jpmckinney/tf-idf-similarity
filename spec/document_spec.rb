@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# @see https://github.com/bbcrd/Similarity/blob/master/test/test_document.rb
 describe TfIdfSimilarity::Document do
   let :text do
     "FOO-foo BAR bar \r\n\t 123 !@#"
@@ -39,7 +40,7 @@ describe TfIdfSimilarity::Document do
 
   describe '#id' do
     it 'should return the ID if no ID given' do
-      document.id.should be_an(Integer)
+      document.id.should == document.object_id
     end
 
     it 'should return the given ID' do
