@@ -20,7 +20,7 @@ Create a set of documents:
     corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
     corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
 
-Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/) (default:
+Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/) (default):
 
     model = TfIdfSimilarity::TfIdfModel(corpus, :function => :tf_idf)
 
@@ -32,22 +32,12 @@ Create a document-term matrix using the [Okapi BM25 ranking function](http://en.
 
 ## Speed
 
-Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the `gsl`, `narray` or `nmatrix` gems for faster matrix operations, e.g.:
+Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) gems for faster matrix operations. For example:
 
     require 'gsl'
     model = TfIdfSimilarity::TfIdfModel(corpus, :library => :gsl)
 
-### [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/)
-
-    gem install gsl
-
-### [NArray](http://narray.rubyforge.org/)
-
-    gem install narray
-
-### [NMatrix](https://github.com/SciRuby/nmatrix)
-
-The nmatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the nmatrix gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
+The NMatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the NMatrix gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
 
 ## Extras
 
@@ -68,22 +58,25 @@ At the time of writing, no other Ruby gem implemented the tf*idf formula used by
 
 ### Term frequencies
 
-The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document; this occurs frequently in the academic literature, but only to demonstrate why normalization is important. The [tf_idf](https://github.com/reddavis/TF-IDF) and similarity gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature. The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
+* The [vss](https://github.com/mkdynamic/vss) gem does not normalize the frequency of a term in a document; this occurs frequently in the academic literature, but only to demonstrate why normalization is important.
+* The [tf_idf](https://github.com/reddavis/TF-IDF) and similarity gems normalize the frequency of a term in a document to the number of terms in that document, which never occurs in the literature.
+* The [tf-idf](https://github.com/mchung/tf-idf) gem normalizes the frequency of a term in a document to the number of *unique* terms in that document, which never occurs in the literature.
 
 ### Document frequencies
 
-The vss gem does not normalize the inverse document frequency. The treat, tf_idf, tf-idf and similarity gems use variants of the typical inverse document frequency formula.
+* The vss gem does not normalize the inverse document frequency.
+* The treat, tf_idf, tf-idf and similarity gems use variants of the typical inverse document frequency formula.
 
 ### Normalization
 
-The treat, tf_idf, tf-idf, rsemantic and vss gems have no normalization component.
+* The treat, tf_idf, tf-idf, rsemantic and vss gems have no normalization component.
 
 ## Additional adapters
 
 Adapters for the following projects were also considered:
 
 * [Ruby-LAPACK](http://ruby.gfd-dennou.org/products/ruby-lapack/) is a very thin wrapper around LAPACK, which has an opaque Fortran-style naming scheme.
-* [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) give access to LAPACK from Ruby, but are old and unavailable as gems.
+* [Linalg](https://github.com/quix/linalg) and [RNum](http://rnum.rubyforge.org/) give access to LAPACK from Ruby but are old and unavailable as gems.
 
 ## Reference
 
