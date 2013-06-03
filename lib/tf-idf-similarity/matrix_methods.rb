@@ -15,7 +15,7 @@ private
     when :narray # @see https://github.com/masa16/narray/issues/21
       norm = NMath.sqrt((@matrix ** 2).sum(1).reshape(@matrix.shape[0], 1))
       norm[norm.where2[1]] = 1.0 # avoid division by zero
-      NArray.refer(@matrix / norm)
+      NMatrix.refer(@matrix / norm) # must be NMatrix for matrix multiplication
     when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/38
       normal = NMatrix.new(:dense, @matrix.shape, :float64)
       (0...@matrix.shape[1]).each do |j|
