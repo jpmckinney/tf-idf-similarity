@@ -43,7 +43,11 @@ class TfIdfSimilarity::TermCountModel
       when :nmatrix
         row(index).each.count(&:nonzero?)
       else
-        row(index).count(&:nonzero?)
+        vector = row(index)
+        unless vector.respond_to?(:count)
+          vector = vector.to_a
+        end
+        vector.count(&:nonzero?)
       end
     else
       0
@@ -61,7 +65,11 @@ class TfIdfSimilarity::TermCountModel
       when :nmatrix
         row(index).each.reduce(0, :+)
       else
-        row(index).reduce(0, :+)
+        vector = row(index)
+        unless vector.respond_to?(:reduce)
+          vector = vector.to_a
+        end
+        vector.reduce(0, :+)
       end
     else
       0

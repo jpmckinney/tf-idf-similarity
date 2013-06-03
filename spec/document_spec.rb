@@ -100,11 +100,11 @@ describe TfIdfSimilarity::Document do
 
   describe '#terms' do
     it 'should return the terms if no tokens given' do
-      document.terms.should == %w(foo bar)
+      document.terms.sort.should == ['bar', 'foo']
     end
 
     it 'should return the terms if tokens given' do
-      document_with_tokens.terms.should == %w(foo-foo bar)
+      document_with_tokens.terms.sort.should == ['bar', 'foo-foo']
     end
 
     it 'should return no terms if no text given' do

@@ -30,8 +30,10 @@ private
       Matrix.columns(@matrix.column_vectors.map do |column|
         if column.to_a.all?(&:zero?)
           column
-        else
+        elsif column.respond_to?(:normalize)
           column.normalize
+        else
+          column * (1 / Math.sqrt(column.inner_product(column))) # 1.8 does define division
         end
       end)
     end
