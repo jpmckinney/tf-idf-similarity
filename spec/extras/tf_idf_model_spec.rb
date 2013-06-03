@@ -188,12 +188,14 @@ describe TfIdfSimilarity::TfIdfModel do
       model.plain_idf('said', 1, 1).should be_within(0.001).of(2.159) # 2.15948424935337
 
       # should add input documents to an empty corpus
-      model_c = build_model([])
+      unless MATRIX_LIBRARY == :gsl
+        model_c = build_model([])
 
-      default = model_c.plain_idf('xxx', 1, 1)
-      model_c.plain_idf('moon', 1, 1).should == default
-      model_c.plain_idf('water', 1, 1).should == default
-      model_c.plain_idf('said', 1, 1).should == default
+        default = model_c.plain_idf('xxx', 1, 1)
+        model_c.plain_idf('moon', 1, 1).should == default
+        model_c.plain_idf('water', 1, 1).should == default
+        model_c.plain_idf('said', 1, 1).should == default
+      end
 
       model_d = build_model([
         build_document('moon'),
@@ -209,7 +211,7 @@ describe TfIdfSimilarity::TfIdfModel do
       default = model_b.plain_idf('xxx', 1, 1)
       model_b.plain_idf('water', 1, 1).should == default
       model_b.plain_idf('moon', 1, 1).should == default # returns 0 for stopwords
-      model_b.plain_idf('said', 1, 1).should == be_within(0.001).of(2.140) # 2.14006616349627
+      model_b.plain_idf('said', 1, 1).should be_within(0.001).of(2.140) # 2.14006616349627
 
       model_e = build_model(corpus_b + [
         build_document('moon', :tokens => %w()),
@@ -217,9 +219,9 @@ describe TfIdfSimilarity::TfIdfModel do
       ])
 
       default = model_e.plain_idf('xxx', 1, 1)
-      model_e.plain_idf('water', 1, 1).should == be_within(0.001).of(3.277) # 3.27714473299218
+      model_e.plain_idf('water', 1, 1).should be_within(0.001).of(3.277) # 3.27714473299218
       model_e.plain_idf('moon', 1, 1).should == default # returns 0 for stopwords
-      model_e.plain_idf('said', 1, 1).should == be_within(0.001).of(2.178) # 2.17853244432407
+      model_e.plain_idf('said', 1, 1).should be_within(0.001).of(2.178) # 2.17853244432407
     end
   end
 
@@ -261,7 +263,7 @@ describe TfIdfSimilarity::TfIdfModel do
 
     it 'should return the tf*idf' do
       (tf * idf).should be_within(0.001).of(0.060) # 0.0602
-      model.tfidf(one, 'b').should == be_within(0.001).of(1.414)
+      model.tfidf(one, 'b').should be_within(0.001).of(1.414)
     end
   end
 end
