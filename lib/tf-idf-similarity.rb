@@ -1,6 +1,12 @@
 require 'forwardable'
 require 'set'
 
+begin
+  require 'unicode_utils'
+rescue LoadError
+  # Ruby 1.8
+end
+
 module TfIdfSimilarity
 end
 

@@ -1,9 +1,3 @@
-begin
-  require 'unicode_utils'
-rescue LoadError
-  # Ruby 1.8
-end
-
 # A document.
 class TfIdfSimilarity::Document
   # The document's identifier.
