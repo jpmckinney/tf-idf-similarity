@@ -124,7 +124,7 @@ private
       GSL::Matrix[*array]
     when :narray
       NArray[*array]
-    when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/91
+    when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/91#issuecomment-18870619
       NMatrix.new(:dense, [array.size, array.empty? ? 0 : array[0].size], array.flatten)
     else
       Matrix[*array]
