@@ -22,11 +22,11 @@ Create a set of documents:
 
 Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/) (default):
 
-    model = TfIdfSimilarity::TfIdfModel(corpus, :function => :tf_idf)
+    model = TfIdfSimilarity::TfIdfModel.new(corpus, :function => :tf_idf)
 
 Create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
 
-    model = TfIdfSimilarity::TfIdfModel(corpus, :function => :bm25)
+    model = TfIdfSimilarity::TfIdfModel.new(corpus, :function => :bm25)
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
@@ -35,7 +35,7 @@ Create a document-term matrix using the [Okapi BM25 ranking function](http://en.
 Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) gems for faster matrix operations. For example:
 
     require 'gsl'
-    model = TfIdfSimilarity::TfIdfModel(corpus, :library => :gsl)
+    model = TfIdfSimilarity::TfIdfModel.new(corpus, :library => :gsl)
 
 The NMatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the NMatrix gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
 
