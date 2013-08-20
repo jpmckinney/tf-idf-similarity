@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["info@opennorth.ca"]
   s.homepage    = "http://github.com/opennorth/tf-idf-similarity"
   s.summary     = %q{Calculates the similarity between texts using tf*idf}
+  s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
