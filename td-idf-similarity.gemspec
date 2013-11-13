@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '~> 2.10')
   s.add_development_dependency('rake')
   s.add_development_dependency('coveralls')
+  s.add_development_dependency('mime-types', '~> 1.2.5') # 2.0 requires Ruby 1.9.2
 end
