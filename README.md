@@ -32,7 +32,7 @@ Create a document-term matrix using the [Okapi BM25 ranking function](http://en.
 
 ## Speed
 
-Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) gems for faster matrix operations. For example:
+Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) (0.0.9 or greater) gems for faster matrix operations. For example:
 
     require 'gsl'
     model = TfIdfSimilarity::TfIdfModel.new(corpus, :library => :gsl)
