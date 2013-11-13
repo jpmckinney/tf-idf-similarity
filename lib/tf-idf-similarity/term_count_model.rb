@@ -63,7 +63,7 @@ class TfIdfSimilarity::TermCountModel
       when :gsl, :narray
         row(index).sum
       when :nmatrix
-        row(index).each.reduce(0, :+)
+        row(index).each.reduce(0, :+) # NMatrix's `sum` method is slower
       else
         vector = row(index)
         unless vector.respond_to?(:reduce)

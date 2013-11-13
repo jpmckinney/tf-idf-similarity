@@ -17,7 +17,7 @@ private
       norm[norm.where2[1]] = 1.0 # avoid division by zero
       NMatrix.refer(@matrix / norm) # must be NMatrix for matrix multiplication
     when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/38
-      normal = NMatrix.new(:dense, @matrix.shape, :float64)
+      normal = NMatrix.new(:dense, @matrix.shape, 0, :float64)
       (0...@matrix.shape[1]).each do |j|
         column = @matrix.column(j)
         norm = Math.sqrt(column.transpose.dot(column)[0, 0])
@@ -100,7 +100,7 @@ private
   def values
     case @library
     when :nmatrix
-      @matrix.each.to_a
+      @matrix.each.to_a # faster than NMatrix's `to_a` and `to_flat_a`
     else
       @matrix.to_a.flatten
     end
