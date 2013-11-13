@@ -6,7 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/opennorth/tf-idf-similarity.png)](https://codeclimate.com/github/opennorth/tf-idf-similarity)
 
 Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](http://en.wikipedia.org/wiki/
-) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) or similar (see below).
+) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
 
 ## Usage
 
