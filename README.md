@@ -20,13 +20,13 @@ Create a set of documents:
     corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
     corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
 
-Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/) (default):
+Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/):
 
-    model = TfIdfSimilarity::TfIdfModel.new(corpus, :function => :tf_idf)
+    model = TfIdfSimilarity::TfIdfModel.new(corpus)
 
 Create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
 
-    model = TfIdfSimilarity::TfIdfModel.new(corpus, :function => :bm25)
+    model = TfIdfSimilarity::BM25Model.new(corpus)
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 

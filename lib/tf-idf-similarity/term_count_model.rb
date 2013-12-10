@@ -1,8 +1,4 @@
 # A simple document-term matrix.
-#
-# @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html
-# @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/BM25Similarity.html
-# @see http://en.wikipedia.org/wiki/Okapi_BM25
 class TfIdfSimilarity::TermCountModel
   include TfIdfSimilarity::MatrixMethods
 
