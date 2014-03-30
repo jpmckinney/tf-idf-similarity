@@ -16,9 +16,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency('unicode_utils') unless RUBY_VERSION < '1.9'
   s.add_development_dependency('rspec', '~> 2.10')
   s.add_development_dependency('rake')
   s.add_development_dependency('coveralls')
   s.add_development_dependency('mime-types', '~> 1.25') # 2.0 requires Ruby 1.9.2
+
+  s.extensions = ['ext/mkrf_conf.rb']
 end
