@@ -2,7 +2,8 @@ require 'forwardable'
 require 'set'
 
 begin
-  require 'unicode_utils'
+  require 'unicode_utils/downcase'
+  require 'unicode_utils/each_word'
 rescue LoadError
   # Ruby 1.8
 end
