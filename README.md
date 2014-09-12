@@ -1,5 +1,6 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
+[![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](http://badge.fury.io/rb/tf-idf-similarity)
 [![Build Status](https://secure.travis-ci.org/opennorth/tf-idf-similarity.png)](http://travis-ci.org/opennorth/tf-idf-similarity)
 [![Dependency Status](https://gemnasium.com/opennorth/tf-idf-similarity.png)](https://gemnasium.com/opennorth/tf-idf-similarity)
 [![Coverage Status](https://coveralls.io/repos/opennorth/tf-idf-similarity/badge.png?branch=master)](https://coveralls.io/r/opennorth/tf-idf-similarity)
