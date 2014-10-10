@@ -38,7 +38,11 @@ module TfIdfSimilarity
     # @note Columns are normalized to unit vectors, so we can calculate the cosine
     #   similarity of all document vectors.
     def similarity_matrix
-      multiply_self(normalize)
+      if documents.empty?
+        []
+      else
+        multiply_self(normalize)
+      end
     end
 
     # Return the index of the document in the corpus.

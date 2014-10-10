@@ -19,3 +19,9 @@ when :nmatrix
 else
   require 'matrix'
 end
+
+RSpec.configure do |c|
+  if MATRIX_LIBRARY == :gsl # GSL can't initialize an empty matrix
+    c.filter_run_excluding :empty_matrix => true
+  end
+end
