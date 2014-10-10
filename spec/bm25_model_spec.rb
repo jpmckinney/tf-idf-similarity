@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module TfIdfSimilarity
-  describe TfIdfModel do
+  describe BM25Model do
     let :text do
       "FOO-foo BAR bar \r\n\t 123 !@#"
     end
@@ -41,7 +41,7 @@ module TfIdfSimilarity
 
     context 'without documents', :unless => lambda{MATRIX_LIBRARY == :gsl} do
       let :model do
-        TfIdfModel.new([], :library => MATRIX_LIBRARY)
+        BM25Model.new([], :library => MATRIX_LIBRARY)
       end
 
       describe '#documents' do
@@ -92,7 +92,7 @@ module TfIdfSimilarity
       end
 
       let :model do
-        TfIdfModel.new(documents, :library => MATRIX_LIBRARY)
+        BM25Model.new(documents, :library => MATRIX_LIBRARY)
       end
 
       describe '#documents' do
@@ -109,21 +109,21 @@ module TfIdfSimilarity
 
       describe '#inverse_document_frequency' do
         it 'should return the inverse document frequency' do
-          model.idf('foo').should be_within(0.001).of(1 + Math.log(4 / (1 + 1.0)))
+          model.idf('foo').should be_within(0.001).of(Math.log((4 - 1 + 0.5) / (1 + 0.5)))
         end
 
         it 'should return the inverse document frequency of a non-occurring term' do
-          model.idf('xxx').should be_within(0.001).of(1 + Math.log(4 / (0 + 1.0)))
+          model.idf('xxx').should be_within(0.001).of(Math.log((4 - 0 + 0.5) / (0 + 0.5)))
         end
       end
 
       describe '#term_frequency' do
         it 'should return the term frequency if no tokens given' do
-          model.tf(document, 'foo').should == Math.sqrt(2)
+          model.tf(document, 'foo').should == (2 * 2.2) / (2 + 0.3 + 0.9 * 4 / 5.5)
         end
 
         it 'should return the term frequency if tokens given' do
-          model.tf(document_with_tokens, 'foo-foo').should == 1
+          model.tf(document_with_tokens, 'foo-foo').should == (1 * 2.2) / (1 + 0.3 + 0.9 * 4 / 5.5)
         end
 
         it 'should return no term frequency if no text given' do
@@ -131,7 +131,7 @@ module TfIdfSimilarity
         end
 
         it 'should return the term frequency if term counts given' do
-          model.tf(document_with_term_counts, 'bar').should == Math.sqrt(5)
+          model.tf(document_with_term_counts, 'bar').should == (5 * 2.2) / (5 + 0.3 + 0.9 * 4 / 5.5)
         end
 
         it 'should return the term frequency of a non-occurring term' do
@@ -139,13 +139,13 @@ module TfIdfSimilarity
         end
 
         it 'should return the term frequency in a non-occurring document' do
-          model.tf(non_corpus_document, 'foo').should == Math.sqrt(3)
+          model.tf(non_corpus_document, 'foo').should == (3 * 2.2) / (3 + 0.3 + 0.9 * 4 / 5.5)
         end
       end
 
       describe '#term_frequency_inverse_document_frequency' do
         it 'should return the tf*idf' do
-          model.tfidf(document, 'foo').should be_within(0.001).of((1 + Math.log(4 / (1 + 1.0))) * Math.sqrt(2))
+          model.tfidf(document, 'foo').should be_within(0.001).of(Math.log((4 - 1 + 0.5) / (1 + 0.5)) * (2 * 2.2) / (2 + 0.3 + 0.9 * 4 / 5.5))
         end
 
         it 'should return the tf*idf of a non-occurring term' do
@@ -153,17 +153,17 @@ module TfIdfSimilarity
         end
 
         it 'should return the tf*idf in a non-occurring term' do
-          model.tfidf(non_corpus_document, 'foo').should be_within(0.001).of((1 + Math.log(4 / (1 + 1.0))) * Math.sqrt(3))
+          model.tfidf(non_corpus_document, 'foo').should be_within(0.001).of(Math.log((4 - 1 + 0.5) / (1 + 0.5)) * (3 * 2.2) / (3 + 0.3 + 0.9 * 4 / 5.5))
         end
       end
 
       describe '#similarity_matrix' do
         it 'should return the similarity matrix' do
           expected = [
-            1.0,   0.326, 0.0, 0.195,
-            0.326, 1.0,   0.0, 0.247,
+            1.0,   0.564, 0.0, 0.479,
+            0.564, 1.0,   0.0, 0.540,
             0.0,   0.0,   0.0, 0.0,
-            0.195, 0.247, 0.0, 1.0,
+            0.479, 0.540, 0.0, 1.0,
           ]
 
           similarity_matrix_values(model).each_with_index do |value,i|
