@@ -26,7 +26,7 @@ module TfIdfSimilarity
       Document.new(text, :term_counts => {'bar' => 5, 'baz' => 10})
     end
 
-    context 'without documents', :unless => lambda{MATRIX_LIBRARY == :gsl} do
+    context 'without documents', :if => lambda{MATRIX_LIBRARY != :gsl} do
       let :model do
         TermCountModel.new([], :library => MATRIX_LIBRARY)
       end

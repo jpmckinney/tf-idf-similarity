@@ -39,7 +39,7 @@ module TfIdfSimilarity
       end
     end
 
-    context 'without documents', :unless => lambda{MATRIX_LIBRARY == :gsl} do
+    context 'without documents', :if => lambda{MATRIX_LIBRARY != :gsl} do
       let :model do
         TfIdfModel.new([], :library => MATRIX_LIBRARY)
       end

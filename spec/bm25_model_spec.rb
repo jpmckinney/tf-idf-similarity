@@ -39,7 +39,7 @@ module TfIdfSimilarity
       end
     end
 
-    context 'without documents', :unless => lambda{MATRIX_LIBRARY == :gsl} do
+    context 'without documents', :if => lambda{MATRIX_LIBRARY != :gsl} do
       let :model do
         BM25Model.new([], :library => MATRIX_LIBRARY)
       end
@@ -58,19 +58,19 @@ module TfIdfSimilarity
 
       describe '#inverse_document_frequency' do
         it 'should return negative infinity' do
-          model.idf('foo').should == -1/0.0 # -Infinity
+          model.idf('foo').should == 0.0
         end
       end
 
       describe '#term_frequency' do
         it 'should return the term frequency' do
-          model.tf(document, 'foo').should == Math.sqrt(2)
+          model.tf(document, 'foo').should be_nan
         end
       end
 
       describe '#term_frequency_inverse_document_frequency' do
         it 'should return negative infinity' do
-          model.tfidf(document, 'foo').should == -1/0.0 # -Infinity
+          model.tfidf(document, 'foo').should be_nan
         end
       end
 
