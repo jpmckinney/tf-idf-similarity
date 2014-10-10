@@ -5,7 +5,7 @@ module TfIdfSimilarity
     extend Forwardable
     def_delegators :@model, :documents, :terms, :document_count
 
-    # @param [Array<TfIdfSimilarity::Document>] documents documents
+    # @param [Array<Document>] documents documents
     # @param [Hash] opts optional arguments
     # @option opts [Symbol] :library :gsl, :narray, :nmatrix or :matrix (default)
     def initialize(documents, opts = {})
@@ -41,10 +41,18 @@ module TfIdfSimilarity
       multiply_self(normalize)
     end
 
+    # Return the index of the document in the corpus.
+    #
+    # @param [Document] document a document
+    # @return [Integer,nil] the index of the document
     def document_index(document)
       @model.documents.index(document)
     end
 
+    # Return the index of the document with matching text.
+    #
+    # @param [String] text a text
+    # @return [Integer,nil] the index of the document
     def text_index(text)
       @model.documents.index do |document|
         document.text == text

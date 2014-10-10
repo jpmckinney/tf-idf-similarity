@@ -10,7 +10,7 @@ module TfIdfSimilarity
     # The average number of tokens in a document.
     attr_reader :average_document_size
 
-    # @param [Array<TfIdfSimilarity::Document>] documents documents
+    # @param [Array<Document>] documents documents
     # @param [Hash] opts optional arguments
     # @option opts [Symbol] :library :gsl, :narray, :nmatrix or :matrix (default)
     def initialize(documents, opts = {})
