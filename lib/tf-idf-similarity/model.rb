@@ -40,5 +40,9 @@ module TfIdfSimilarity
     def similarity_matrix
       multiply_self(normalize)
     end
+
+    def document_index(document)
+      @model.documents.index(document)
+    end
   end
 end
