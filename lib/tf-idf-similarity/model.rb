@@ -44,5 +44,11 @@ module TfIdfSimilarity
     def document_index(document)
       @model.documents.index(document)
     end
+
+    def text_index(text)
+      @model.documents.index do |document|
+        document.text == text
+      end
+    end
   end
 end

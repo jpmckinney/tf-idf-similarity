@@ -56,6 +56,12 @@ module TfIdfSimilarity
         end
       end
 
+      describe '#text_index' do
+        it 'should return nil' do
+          model.text_index(text).should be_nil
+        end
+      end
+
       describe '#terms' do
         it 'should be empty' do
           model.terms.should be_empty
@@ -110,6 +116,12 @@ module TfIdfSimilarity
       describe '#document_index' do
         it 'should return nil' do
           model.document_index(document).should == 0
+        end
+      end
+
+      describe '#text_index' do
+        it 'should return the index' do
+          model.text_index(text).should == 0
         end
       end
 
