@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/opennorth/tf-idf-similarity/badge.png?branch=master)](https://coveralls.io/r/opennorth/tf-idf-similarity)
 [![Code Climate](https://codeclimate.com/github/opennorth/tf-idf-similarity.png)](https://codeclimate.com/github/opennorth/tf-idf-similarity)
 
-Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](http://en.wikipedia.org/wiki/Tf*idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
+Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](http://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
 
 ## Usage
 
@@ -24,7 +24,7 @@ document3 = TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
 corpus = [document1, document2, document3]
 ```
 
-Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/):
+Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/Tf–idf):
 
 ```ruby
 model = TfIdfSimilarity::TfIdfModel.new(corpus)
@@ -76,7 +76,7 @@ You can access more term frequency, document frequency, and normalization formul
     require 'tf-idf-similarity/extras/document'
     require 'tf-idf-similarity/extras/tf_idf_model'
 
-The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
+The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
 ## Why?
 
@@ -115,14 +115,14 @@ Adapters for the following projects were also considered:
 
 ## Further Reading
 
-Lucene implements many more [similarity functions](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/Similarity.html), such as:
+Lucene implements many more [similarity functions](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/Similarity.html), such as:
 
-* a [divergence from randomness (DFR) framework](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/DFRSimilarity.html)
-* a [framework for the family of information-based models](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/IBSimilarity.html)
-* a [language model with Bayesian smoothing using Dirichlet priors](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html)
-* a [language model with Jelinek-Mercer smoothing](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html)
+* a [divergence from randomness (DFR) framework](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/DFRSimilarity.html)
+* a [framework for the family of information-based models](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/IBSimilarity.html)
+* a [language model with Bayesian smoothing using Dirichlet priors](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/LMDirichletSimilarity.html)
+* a [language model with Jelinek-Mercer smoothing](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html)
 
-Lucene can even [combine similarity measures](http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
+Lucene can even [combine similarity measures](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
 
 ## Bugs? Questions?
 
