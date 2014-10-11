@@ -10,23 +10,53 @@ Calculates the similarity between texts using a [bag-of-words](http://en.wikiped
 
 ## Usage
 
-    require 'matrix'
-    require 'tf-idf-similarity'
+```ruby
+require 'matrix'
+require 'tf-idf-similarity'
+```
 
 Create a set of documents:
 
-    corpus = []
-    corpus << TfIdfSimilarity::Document.new("Lorem ipsum dolor sit amet...")
-    corpus << TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
-    corpus << TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
+```ruby
+document1 = TfIdfSimilarity::Document.new("Lorem ipsum dolor sit amet...")
+document2 = TfIdfSimilarity::Document.new("Pellentesque sed ipsum dui...")
+document3 = TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
+corpus = [document1, document2, document3]
+```
 
 Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/):
 
-    model = TfIdfSimilarity::TfIdfModel.new(corpus)
+```ruby
+model = TfIdfSimilarity::TfIdfModel.new(corpus)
+```
 
-Create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
+Or, create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
 
-    model = TfIdfSimilarity::BM25Model.new(corpus)
+```ruby
+model = TfIdfSimilarity::BM25Model.new(corpus)
+```
+
+Create a similarity matrix:
+
+```ruby
+matrix = model.similarity_matrix
+```
+
+Find the similarity of two documents in the matrix:
+
+```ruby
+matrix[model.document_index(document1), model.document_index(document2)]
+```
+
+Print the tf*idf values for terms in a document:
+
+```ruby
+tfidf_by_term = {}
+document1.terms.each do |term|
+  tfidf_by_term[term] = model.tfidf(document1, term)
+end
+puts tfidf_by_term.sort_by{|_,tfidf| -tfidf}
+```
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
