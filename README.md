@@ -58,6 +58,15 @@ end
 puts tfidf_by_term.sort_by{|_,tfidf| -tfidf}
 ```
 
+Tokenize a document yourself, for example by excluding stop words:
+
+```ruby
+require 'unicode_utils'
+text = "Lorem ipsum dolor sit amet..."
+tokens = UnicodeUtils.each_word(text) - ['and', 'the', 'to']
+document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens)
+```
+
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
 ## Speed
