@@ -73,10 +73,12 @@ document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens)
 
 Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) (0.0.9 or greater) gems for faster matrix operations. For example:
 
-    require 'gsl'
-    model = TfIdfSimilarity::TfIdfModel.new(corpus, :library => :gsl)
+    require 'narray'
+    model = TfIdfSimilarity::TfIdfModel.new(corpus, :library => :narray)
 
-The NMatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#synopsis) to install the NMatrix gem. You may need [additional instructions for Mac OS X Lion](https://github.com/SciRuby/nmatrix/wiki/Installation).
+NArray seems to have the best performance of the three libraries.
+
+The NMatrix gem gives access to [Automatically Tuned Linear Algebra Software (ATLAS)](http://math-atlas.sourceforge.net/), which you may know of through [Linear Algebra PACKage (LAPACK)](http://www.netlib.org/lapack/) or [Basic Linear Algebra Subprograms (BLAS)](http://www.netlib.org/blas/). Follow [these instructions](https://github.com/SciRuby/nmatrix#installation) to install the NMatrix gem.
 
 ## Extras
 
