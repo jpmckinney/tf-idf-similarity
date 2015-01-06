@@ -1,10 +1,10 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
 [![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](http://badge.fury.io/rb/tf-idf-similarity)
-[![Build Status](https://secure.travis-ci.org/opennorth/tf-idf-similarity.png)](http://travis-ci.org/opennorth/tf-idf-similarity)
-[![Dependency Status](https://gemnasium.com/opennorth/tf-idf-similarity.png)](https://gemnasium.com/opennorth/tf-idf-similarity)
-[![Coverage Status](https://coveralls.io/repos/opennorth/tf-idf-similarity/badge.png?branch=master)](https://coveralls.io/r/opennorth/tf-idf-similarity)
-[![Code Climate](https://codeclimate.com/github/opennorth/tf-idf-similarity.png)](https://codeclimate.com/github/opennorth/tf-idf-similarity)
+[![Build Status](https://secure.travis-ci.org/jpmckinney/tf-idf-similarity.png)](http://travis-ci.org/jpmckinney/tf-idf-similarity)
+[![Dependency Status](https://gemnasium.com/jpmckinney/tf-idf-similarity.png)](https://gemnasium.com/jpmckinney/tf-idf-similarity)
+[![Coverage Status](https://coveralls.io/repos/jpmckinney/tf-idf-similarity/badge.png?branch=master)](https://coveralls.io/r/jpmckinney/tf-idf-similarity)
+[![Code Climate](https://codeclimate.com/github/jpmckinney/tf-idf-similarity.png)](https://codeclimate.com/github/jpmckinney/tf-idf-similarity)
 
 Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](http://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
 
@@ -135,8 +135,4 @@ Lucene implements many more [similarity functions](http://lucene.apache.org/core
 
 Lucene can even [combine similarity measures](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/MultiSimilarity.html).
 
-## Bugs? Questions?
-
-This gem's main repository is on GitHub: [http://github.com/opennorth/tf-idf-similarity](http://github.com/opennorth/tf-idf-similarity), where your contributions, forks, bug reports, feature requests, and feedback are greatly welcomed.
-
-Copyright (c) 2012 Open North Inc., released under the MIT license
+Copyright (c) 2012 James McKinney, released under the MIT license
