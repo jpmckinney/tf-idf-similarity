@@ -1,12 +1,12 @@
 # Ruby Vector Space Model (VSM) with tf*idf weights
 
-[![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](http://badge.fury.io/rb/tf-idf-similarity)
-[![Build Status](https://secure.travis-ci.org/jpmckinney/tf-idf-similarity.png)](http://travis-ci.org/jpmckinney/tf-idf-similarity)
+[![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](https://badge.fury.io/rb/tf-idf-similarity)
+[![Build Status](https://secure.travis-ci.org/jpmckinney/tf-idf-similarity.png)](https://travis-ci.org/jpmckinney/tf-idf-similarity)
 [![Dependency Status](https://gemnasium.com/jpmckinney/tf-idf-similarity.png)](https://gemnasium.com/jpmckinney/tf-idf-similarity)
 [![Coverage Status](https://coveralls.io/repos/jpmckinney/tf-idf-similarity/badge.png)](https://coveralls.io/r/jpmckinney/tf-idf-similarity)
 [![Code Climate](https://codeclimate.com/github/jpmckinney/tf-idf-similarity.png)](https://codeclimate.com/github/jpmckinney/tf-idf-similarity)
 
-Calculates the similarity between texts using a [bag-of-words](http://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](http://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](http://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
+Calculates the similarity between texts using a [bag-of-words](https://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](https://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](https://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
 
 ## Usage
 
@@ -24,13 +24,13 @@ document3 = TfIdfSimilarity::Document.new("Nam scelerisque dui sed leo...")
 corpus = [document1, document2, document3]
 ```
 
-Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](http://en.wikipedia.org/wiki/Tf–idf):
+Create a document-term matrix using [Term Frequency-Inverse Document Frequency function](https://en.wikipedia.org/wiki/Tf–idf):
 
 ```ruby
 model = TfIdfSimilarity::TfIdfModel.new(corpus)
 ```
 
-Or, create a document-term matrix using the [Okapi BM25 ranking function](http://en.wikipedia.org/wiki/Okapi_BM25):
+Or, create a document-term matrix using the [Okapi BM25 ranking function](https://en.wikipedia.org/wiki/Okapi_BM25):
 
 ```ruby
 model = TfIdfSimilarity::BM25Model.new(corpus)

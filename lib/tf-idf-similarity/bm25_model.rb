@@ -1,7 +1,7 @@
 # A document-term matrix using the BM25 function.
 #
 # @see http://lucene.apache.org/core/4_0_0-BETA/core/org/apache/lucene/search/similarities/BM25Similarity.html
-# @see http://en.wikipedia.org/wiki/Okapi_BM25
+# @see https://en.wikipedia.org/wiki/Okapi_BM25
 module TfIdfSimilarity
   class BM25Model < Model
     # Return the term's inverse document frequency.

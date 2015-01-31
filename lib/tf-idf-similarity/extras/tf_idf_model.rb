@@ -110,7 +110,7 @@ module TfIdfSimilarity
     end
     alias_method :binary_tf, :binary_term_frequency
 
-    # @see http://en.wikipedia.org/wiki/Tf*idf
+    # @see https://en.wikipedia.org/wiki/Tf*idf
     # @see http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
     def normalized_term_frequency(document, term, a = 0)
       a + (1 - a) * document.term_count(term) / document.maximum_term_count

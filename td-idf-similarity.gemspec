@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version     = TfIdfSimilarity::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["James McKinney"]
-  s.homepage    = "http://github.com/jpmckinney/tf-idf-similarity"
+  s.homepage    = "https://github.com/jpmckinney/tf-idf-similarity"
   s.summary     = %q{Calculates the similarity between texts using tf*idf}
   s.license     = 'MIT'
 
