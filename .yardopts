@@ -1,4 +1,3 @@
---no-private
 --hide-void-return
 --embed-mixin ClassMethods
 --markup=markdown
