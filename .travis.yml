@@ -16,6 +16,3 @@ before_install:
   # Installing ATLAS will install BLAS.
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq libatlas-dev libatlas-base-dev libatlas3gf-base; fi
   - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/atlas; fi
-# Travis sometimes runs without Bundler.
-install: bundle
-script: bundle exec rake --trace
