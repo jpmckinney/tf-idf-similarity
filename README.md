@@ -63,7 +63,7 @@ Tokenize a document yourself, for example by excluding stop words:
 ```ruby
 require 'unicode_utils'
 text = "Lorem ipsum dolor sit amet..."
-tokens = UnicodeUtils.each_word(text) - ['and', 'the', 'to']
+tokens = UnicodeUtils.each_word(text).to_a - ['and', 'the', 'to']
 document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens)
 ```
 
