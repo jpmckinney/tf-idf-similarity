@@ -1,4 +1,6 @@
+sudo: false
 language: ruby
+cache: bundler
 rvm:
   - 1.9.3
   - 2.0.0
@@ -9,10 +11,15 @@ env:
   - MATRIX_LIBRARY=narray
   - MATRIX_LIBRARY=nmatrix
   - MATRIX_LIBRARY=matrix
+addons:
+  apt:
+    packages:
+    - gsl-bin
+    - libgsl0-dev
+    # Installing ATLAS will install BLAS.
+    - libatlas-dev
+    - libatlas-base-dev
+    - libatlas3gf-base
 before_install:
   - bundle config build.nmatrix --with-lapacklib
-  - if [ $MATRIX_LIBRARY = 'nmatrix' -o $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get update -qq; fi
-  - if [ $MATRIX_LIBRARY = 'gsl' ]; then sudo apt-get install gsl-bin libgsl0-dev; fi
-  # Installing ATLAS will install BLAS.
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then sudo apt-get install -qq libatlas-dev libatlas-base-dev libatlas3gf-base; fi
-  - if [ $MATRIX_LIBRARY = 'nmatrix' ]; then export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/atlas; fi
+  - export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/atlas
