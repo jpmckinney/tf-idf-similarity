@@ -35,10 +35,7 @@ module TfIdfSimilarity
     #
     # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.LowerCaseFilterFactory
     def lowercase_filter
-      self.class.new(defined?(UnicodeUtils) ? UnicodeUtils.downcase(self) : tr(
-        "ÀÁÂÃÄÅĀĂĄÇĆĈĊČÐĎĐÈÉÊËĒĔĖĘĚĜĞĠĢĤĦÌÍÎÏĨĪĬĮĴĶĹĻĽĿŁÑŃŅŇŊÒÓÔÕÖØŌŎŐŔŖŘŚŜŞŠŢŤŦÙÚÛÜŨŪŬŮŰŲŴÝŶŸŹŻŽ",
-        "àáâãäåāăąçćĉċčðďđèéêëēĕėęěĝğġģĥħìíîïĩīĭįĵķĺļľŀłñńņňŋòóôõöøōŏőŕŗřśŝşšţťŧùúûüũūŭůűųŵýŷÿźżž"
-      ).downcase)
+      self.class.new(UnicodeUtils.downcase(self))
     end
 
     # Returns a string with no English possessive or periods in acronyms.
