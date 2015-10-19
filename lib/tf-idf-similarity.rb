@@ -1,12 +1,8 @@
 require 'forwardable'
 require 'set'
 
-begin
-  require 'unicode_utils/downcase'
-  require 'unicode_utils/each_word'
-rescue LoadError
-  # Ruby 1.8
-end
+require 'unicode_utils/downcase'
+require 'unicode_utils/each_word'
 
 module TfIdfSimilarity
 end

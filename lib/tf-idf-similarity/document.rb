@@ -76,7 +76,7 @@ module TfIdfSimilarity
     # @see http://unicode.org/reports/tr29/#Default_Word_Boundaries
     # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StandardTokenizerFactory
     def tokenize(text)
-      @tokens || defined?(UnicodeUtils) && UnicodeUtils.each_word(text) || text.split(/\b/) # @todo Ruby 1.8 has no good word boundary code
+      @tokens || UnicodeUtils.each_word(text)
     end
   end
 end

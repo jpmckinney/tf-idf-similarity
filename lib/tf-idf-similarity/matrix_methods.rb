@@ -34,7 +34,7 @@ module TfIdfSimilarity
           elsif column.respond_to?(:normalize)
             column.normalize
           else
-            column * (1 / Math.sqrt(column.inner_product(column))) # 1.8 does define division
+            column / Math.sqrt(column.inner_product(column))
           end
         end)
       end
