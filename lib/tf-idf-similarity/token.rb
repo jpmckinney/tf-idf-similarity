@@ -44,7 +44,7 @@ module TfIdfSimilarity
     #
     # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.ClassicFilterFactory
     def classic_filter
-      self.class.new(self.gsub('.', '').chomp("'s"))
+      self.class.new(self.gsub('.', '').chomp("'s").chomp("’s").chomp("`s"))
     end
   end
 end
