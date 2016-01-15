@@ -33,7 +33,7 @@ module TfIdfSimilarity
         build_model(documents)
       end
 
-      pending "Add #search"
+      skip "Add #search"
     end
 
     # @see https://github.com/bbcrd/Similarity/blob/master/test/test_corpus.rb
@@ -98,7 +98,7 @@ module TfIdfSimilarity
       end
 
       it 'should return the similarity matrix' do
-        pending "Calculate the tf*idf matrix like the similarity gem does"
+        skip "Calculate the tf*idf matrix like the similarity gem does"
       end
 
       it 'should return the number of documents in which a term appears' do
@@ -113,7 +113,7 @@ module TfIdfSimilarity
       end
 
       it 'should return the document vector' do
-        pending "Calculate the tf*idf matrix like the similarity gem does"
+        skip "Calculate the tf*idf matrix like the similarity gem does"
       end
     end
 
