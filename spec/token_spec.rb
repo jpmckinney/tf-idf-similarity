@@ -28,6 +28,14 @@ module TfIdfSimilarity
         Token.new("foo's").classic_filter.should == 'foo'
       end
 
+      it 'should remove ending possessives with nonstandard apostrophe 1' do
+        Token.new("foo`s").classic_filter.should == 'foo'
+      end
+
+      it 'should remove ending possessives with nonstandard apostrophe 2' do
+        Token.new("foo’s").classic_filter.should == 'foo'
+      end
+
       it 'should not remove infix possessives' do
         Token.new("foo's bar").classic_filter.should == "foo's bar"
       end
