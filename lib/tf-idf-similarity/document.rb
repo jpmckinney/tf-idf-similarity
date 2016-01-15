@@ -14,12 +14,14 @@ module TfIdfSimilarity
     # @param [Hash] opts optional arguments
     # @option opts [String] :id the document's identifier
     # @option opts [Array] :tokens the document's tokenized text
+    # @option opts [Boolean] :process_tokens if false will not filter or check validation of tokens
     # @option opts [Hash] :term_counts the number of times each term appears
     # @option opts [Integer] :size the number of tokens in the document
     def initialize(text, opts = {})
-      @text   = text
-      @id     = opts[:id] || object_id
-      @tokens = opts[:tokens]
+      @text           = text
+      @id             = opts[:id] || object_id
+      @tokens         = opts[:tokens]
+      @process_tokens = opts[:process_tokens].nil? || opts[:tokens].nil? ? true : opts[:process_tokens]
 
       if opts[:term_counts]
         @term_counts = opts[:term_counts]
@@ -52,10 +54,15 @@ module TfIdfSimilarity
     # Tokenizes the text and counts terms and total tokens.
     def set_term_counts_and_size
       tokenize(text).each do |word|
-        token = Token.new(word)
-        if token.valid?
-          term = token.lowercase_filter.classic_filter.to_s
-          @term_counts[term] += 1
+        if @process_tokens
+          token = Token.new(word)
+          if token.valid?
+            term = token.lowercase_filter.classic_filter.to_s
+            @term_counts[term] += 1
+            @size += 1
+          end
+        else
+          @term_counts[word] += 1
           @size += 1
         end
       end
