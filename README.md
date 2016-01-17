@@ -67,6 +67,12 @@ tokens = UnicodeUtils.each_word(text).to_a - ['and', 'the', 'to']
 document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens)
 ```
 
+If you do not want the gem to do any processing of the tokens you pass then use the option `:process_tokens => false`. In general you want this set to `true` as process tokens will handle downcasing and filtering of invalid tokens. This option is only valid if you are passing your own tokens.
+
+```ruby
+document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens, :process_tokens => false)
+```
+
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
 ## Speed
