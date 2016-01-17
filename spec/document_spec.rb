@@ -27,14 +27,6 @@ module TfIdfSimilarity
       Document.new(text, :tokens => tokens)
     end
 
-    let :document_with_tokens_no_processing do
-      Document.new(text, :tokens => tokens, :process_tokens => false)
-    end
-
-    let :document_no_processing do
-      Document.new(text, :process_tokens => false)
-    end
-
     let :document_with_term_counts do
       Document.new(text, :term_counts => {'bar' => 5, 'baz' => 10})
     end
@@ -98,15 +90,6 @@ module TfIdfSimilarity
         document_with_tokens.term_counts.should == {'foo-foo' => 1, 'bar' => 2}
       end
 
-      it 'should return the term counts if tokens given and processing is set to false' do
-        document_with_tokens_no_processing.term_counts.should == {"FOO-foo"=>1, "BAR"=>1, "bar"=>1, "\r\n\t"=>1, "123"=>1, "!@#"=>1}
-      end
-
-      it 'should return the term counts if processing is set to false' do
-        # ignores processing option if tokens are not passed.
-        document_no_processing.term_counts.should == {'foo' => 2, 'bar' => 2}
-      end
-
       it 'should return no term counts if no text given' do
         document_without_text.term_counts.should == {}
       end
@@ -125,15 +108,6 @@ module TfIdfSimilarity
         document_with_tokens.terms.sort.should == ['bar', 'foo-foo']
       end
 
-      it 'should return the term if tokens given and processing is set to false' do
-        document_with_tokens_no_processing.terms.sort.should == ["\r\n\t", "!@#", "123", "BAR", "FOO-foo", "bar"]
-      end
-
-      it 'should return the term if processing is set to false' do
-        # ignores processing option if tokens are not passed.
-        document_no_processing.terms.sort.should == ['bar', 'foo']
-      end
-
       it 'should return no terms if no text given' do
         document_without_text.terms.should == []
       end
@@ -150,15 +124,6 @@ module TfIdfSimilarity
 
       it 'should return the term count if tokens given' do
         document_with_tokens.term_count('foo-foo').should == 1
-      end
-
-      it 'should return the term count if tokens given and processing is set to false' do
-        document_with_tokens_no_processing.term_count('FOO-foo').should == 1
-      end
-
-      it 'should return the term count if processing is set to false' do
-        # ignores processing option if tokens are not passed.
-        document_no_processing.term_count('foo').should == 2
       end
 
       it 'should return no term count if no text given' do
