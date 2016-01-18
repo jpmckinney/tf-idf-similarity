@@ -83,7 +83,7 @@ tokens.each do |token|
     size += 1
   end
 end
-document1 = TfIdfSimilarity::Document.new(text, :tokens => tokens, :term_counts => term_counts, :size => size)
+document1 = TfIdfSimilarity::Document.new(text, :term_counts => term_counts, :size => size)
 ```
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
