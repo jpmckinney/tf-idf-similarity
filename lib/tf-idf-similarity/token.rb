@@ -1,5 +1,5 @@
 # coding: utf-8
-
+require 'delegate'
 # A token.
 #
 # @note We can add more filters from Solr and stem using Porter's Snowball.
