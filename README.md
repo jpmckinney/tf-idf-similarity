@@ -88,6 +88,14 @@ document1 = TfIdfSimilarity::Document.new(text, :term_counts => term_counts, :si
 
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
+## Troubleshooting
+
+```
+NoMethodError: undefined method `[]' for Matrix:Module
+```
+
+The `matrix` gem conflicts with Ruby's internal `Matrix` module. Don't use the `matrix` gem.
+
 ## Speed
 
 Instead of using the Ruby Standard Library's [Matrix](http://www.ruby-doc.org/stdlib-2.0/libdoc/matrix/rdoc/Matrix.html) class, you can use one of the [GNU Scientific Library (GSL)](http://www.gnu.org/software/gsl/), [NArray](http://narray.rubyforge.org/) or [NMatrix](https://github.com/SciRuby/nmatrix) (0.0.9 or greater) gems for faster matrix operations. For example:
