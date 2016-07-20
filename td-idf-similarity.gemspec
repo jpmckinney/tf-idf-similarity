@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('unicode_utils', '~> 1.4')
 
   s.add_development_dependency('coveralls')
+  s.add_development_dependency('json', '< 2')
   s.add_development_dependency('rake')
   s.add_development_dependency('rspec', '~> 2.10')
 end
