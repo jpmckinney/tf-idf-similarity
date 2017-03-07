@@ -10,7 +10,7 @@ require 'delegate'
 # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.WordDelimiterFilterFactory
 # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.SynonymFilterFactory
 module TfIdfSimilarity
-  class Token < SimpleDelegator
+  class Token < ::SimpleDelegator
     # Returns a falsy value if all its characters are numbers, punctuation,
     # whitespace or control characters.
     #
