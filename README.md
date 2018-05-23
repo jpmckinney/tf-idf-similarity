@@ -2,7 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](https://badge.fury.io/rb/tf-idf-similarity)
 [![Build Status](https://secure.travis-ci.org/jpmckinney/tf-idf-similarity.png)](https://travis-ci.org/jpmckinney/tf-idf-similarity)
-[![Dependency Status](https://gemnasium.com/jpmckinney/tf-idf-similarity.png)](https://gemnasium.com/jpmckinney/tf-idf-similarity)
 [![Coverage Status](https://coveralls.io/repos/jpmckinney/tf-idf-similarity/badge.png)](https://coveralls.io/r/jpmckinney/tf-idf-similarity)
 [![Code Climate](https://codeclimate.com/github/jpmckinney/tf-idf-similarity.png)](https://codeclimate.com/github/jpmckinney/tf-idf-similarity)
 
