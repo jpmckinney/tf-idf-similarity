@@ -1,11 +1,11 @@
-# Ruby Vector Space Model (VSM) with tf*idf weights
+# Ruby Vector Space Model (VSM) with tf\*idf weights
 
 [![Gem Version](https://badge.fury.io/rb/tf-idf-similarity.svg)](https://badge.fury.io/rb/tf-idf-similarity)
 [![Build Status](https://secure.travis-ci.org/jpmckinney/tf-idf-similarity.png)](https://travis-ci.org/jpmckinney/tf-idf-similarity)
 [![Coverage Status](https://coveralls.io/repos/jpmckinney/tf-idf-similarity/badge.png)](https://coveralls.io/r/jpmckinney/tf-idf-similarity)
 [![Code Climate](https://codeclimate.com/github/jpmckinney/tf-idf-similarity.png)](https://codeclimate.com/github/jpmckinney/tf-idf-similarity)
 
-Calculates the similarity between texts using a [bag-of-words](https://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](https://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf*idf)](https://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
+Calculates the similarity between texts using a [bag-of-words](https://en.wikipedia.org/wiki/Bag_of_words_model) [Vector Space Model](https://en.wikipedia.org/wiki/Vector_space_model) with [Term Frequency-Inverse Document Frequency (tf\*idf)](https://en.wikipedia.org/wiki/Tf–idf) weights. If your use case demands performance, use [Lucene](http://lucene.apache.org/core/) (see below).
 
 ## Usage
 
@@ -47,7 +47,7 @@ Find the similarity of two documents in the matrix:
 matrix[model.document_index(document1), model.document_index(document2)]
 ```
 
-Print the tf*idf values for terms in a document:
+Print the tf\*idf values for terms in a document:
 
 ```ruby
 tfidf_by_term = {}
@@ -113,11 +113,11 @@ You can access more term frequency, document frequency, and normalization formul
     require 'tf-idf-similarity/extras/document'
     require 'tf-idf-similarity/extras/tf_idf_model'
 
-The default tf*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
+The default tf\*idf formula follows the [Lucene Conceptual Scoring Formula](http://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html).
 
 ## Why?
 
-At the time of writing, no other Ruby gem implemented the tf*idf formula used by Lucene, Sphinx and Ferret.
+At the time of writing, no other Ruby gem implemented the tf\*idf formula used by Lucene, Sphinx and Ferret.
 
 * [rsemantic](https://github.com/josephwilk/rsemantic) now uses the same [term frequency](https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L14) and [document frequency](https://github.com/josephwilk/rsemantic/blob/master/lib/semantic/transform/tf_idf_transform.rb#L13) formulas as Lucene.
 * [treat](https://github.com/louismullie/treat) offers many term frequency formulas, [one of which](https://github.com/louismullie/treat/blob/master/lib/treat/workers/extractors/tf_idf/native.rb#L13) is the same as Lucene.
