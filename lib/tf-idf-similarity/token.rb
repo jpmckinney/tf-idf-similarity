@@ -51,8 +51,8 @@ module TfIdfSimilarity
     end
 
     def to_s
-      UnicodeUtils.downcase(self).
-        gsub('.', '').sub(/['`’]s\z/, '').to_s
+      # Don't call #lowercase_filter and #classic_filter to avoid creating unnecessary objects.
+      UnicodeUtils.downcase(self).gsub('.', '').sub(/['`’]s\z/, '')
     end
   end
 end

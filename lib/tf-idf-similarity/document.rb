@@ -21,8 +21,8 @@ module TfIdfSimilarity
     def initialize(text, opts = {})
       @text   = text
       @id     = opts[:id] || object_id
-      @tokens = Array(opts[:tokens]).map { |t| TfIdfSimilarity::Token.new(t) } if opts[:tokens]
-      @tokenizer = opts[:tokenizer] || TfIdfSimilarity::Tokenizer.new
+      @tokens = Array(opts[:tokens]).map { |t| Token.new(t) } if opts[:tokens]
+      @tokenizer = opts[:tokenizer] || Tokenizer.new
 
       if opts[:term_counts]
         @term_counts = opts[:term_counts]
