@@ -85,6 +85,8 @@ end
 document1 = TfIdfSimilarity::Document.new(text, :term_counts => term_counts, :size => size)
 ```
 
+Or, use your own classes for the tokenizer and tokens, like in [this example](https://gist.github.com/satoryu/0183a4eba365cc67e28988a09f3035b3).
+
 [Read the documentation at RubyDoc.info.](http://rubydoc.info/gems/tf-idf-similarity)
 
 ## Troubleshooting
