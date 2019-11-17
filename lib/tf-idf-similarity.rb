@@ -1,9 +1,6 @@
 require 'forwardable'
 require 'set'
 
-require 'unicode_utils/downcase'
-require 'unicode_utils/each_word'
-
 module TfIdfSimilarity
 end
 

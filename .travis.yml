@@ -18,7 +18,7 @@ addons:
     # Installing ATLAS will install BLAS.
     - libatlas-dev
     - libatlas-base-dev
-    - libatlas3gf-base
+    - libatlas3-base
 before_install:
   - bundle config build.nmatrix --with-lapacklib
   - export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/atlas

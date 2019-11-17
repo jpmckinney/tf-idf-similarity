@@ -1,5 +1,7 @@
 # coding: utf-8
 require 'delegate'
+require 'unicode_utils/downcase'
+require 'unicode_utils/each_word'
 
 # A token.
 #
@@ -46,6 +48,11 @@ module TfIdfSimilarity
     # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.ClassicFilterFactory
     def classic_filter
       self.class.new(self.gsub('.', '').sub(/['`’]s\z/, ''))
+    end
+
+    def to_s
+      # Don't call #lowercase_filter and #classic_filter to avoid creating unnecessary objects.
+      UnicodeUtils.downcase(self).gsub('.', '').sub(/['`’]s\z/, '')
     end
   end
 end

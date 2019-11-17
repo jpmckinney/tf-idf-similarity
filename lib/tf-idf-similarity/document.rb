@@ -1,3 +1,5 @@
+require 'tf-idf-similarity/tokenizer'
+
 # A document.
 module TfIdfSimilarity
   class Document
@@ -19,7 +21,8 @@ module TfIdfSimilarity
     def initialize(text, opts = {})
       @text   = text
       @id     = opts[:id] || object_id
-      @tokens = opts[:tokens]
+      @tokens = Array(opts[:tokens]).map { |t| Token.new(t) } if opts[:tokens]
+      @tokenizer = opts[:tokenizer] || Tokenizer.new
 
       if opts[:term_counts]
         @term_counts = opts[:term_counts]
@@ -51,10 +54,9 @@ module TfIdfSimilarity
 
     # Tokenizes the text and counts terms and total tokens.
     def set_term_counts_and_size
-      tokenize(text).each do |word|
-        token = Token.new(word)
+      tokenize(text).each do |token|
         if token.valid?
-          term = token.lowercase_filter.classic_filter.to_s
+          term = token.to_s
           @term_counts[term] += 1
           @size += 1
         end
@@ -76,7 +78,7 @@ module TfIdfSimilarity
     # @see http://unicode.org/reports/tr29/#Default_Word_Boundaries
     # @see http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StandardTokenizerFactory
     def tokenize(text)
-      @tokens || UnicodeUtils.each_word(text)
+      @tokens || @tokenizer.tokenize(text)
     end
   end
 end
