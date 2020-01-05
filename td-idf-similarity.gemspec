@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/jpmckinney/tf-idf-similarity"
   s.summary     = %q{Calculates the similarity between texts using tf*idf}
   s.license     = 'MIT'
+  s.required_ruby_version = '>= 2.4.0'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
