@@ -147,7 +147,7 @@ module TfIdfSimilarity
         end
 
         it 'should return the term frequency if tokens given' do
-          model.tf(document_with_tokens, 'foo-foo').should == (1 * 2.2) / (1 + 0.3 + 0.9 * 4 / 5.5)
+          model.tf(document_with_tokens, 'foo-foo').should == (1 * 2.2) / (1 + 0.3 + 0.9 * 3 / 5.5)
         end
 
         it 'should return no term frequency if no text given' do
@@ -155,7 +155,7 @@ module TfIdfSimilarity
         end
 
         it 'should return the term frequency if term counts given' do
-          model.tf(document_with_term_counts, 'bar').should == (5 * 2.2) / (5 + 0.3 + 0.9 * 4 / 5.5)
+          model.tf(document_with_term_counts, 'bar').should == (5 * 2.2) / (5 + 0.3 + 0.9 * 15 / 5.5)
         end
 
         it 'should return the term frequency of a non-occurring term' do
@@ -163,7 +163,7 @@ module TfIdfSimilarity
         end
 
         it 'should return the term frequency in a non-occurring document' do
-          model.tf(non_corpus_document, 'foo').should == (3 * 2.2) / (3 + 0.3 + 0.9 * 4 / 5.5)
+          model.tf(non_corpus_document, 'foo').should == (3 * 2.2) / (3 + 0.3 + 0.9 * 3 / 5.5)
         end
       end
 
@@ -177,17 +177,17 @@ module TfIdfSimilarity
         end
 
         it 'should return the tf*idf in a non-occurring term' do
-          model.tfidf(non_corpus_document, 'foo').should be_within(0.001).of(Math.log((4 - 1 + 0.5) / (1 + 0.5)) * (3 * 2.2) / (3 + 0.3 + 0.9 * 4 / 5.5))
+          model.tfidf(non_corpus_document, 'foo').should be_within(0.001).of(Math.log((4 - 1 + 0.5) / (1 + 0.5)) * (3 * 2.2) / (3 + 0.3 + 0.9 * 3 / 5.5))
         end
       end
 
       describe '#similarity_matrix' do
         it 'should return the similarity matrix' do
           expected = [
-            1.0,   0.564, 0.0, 0.479,
-            0.564, 1.0,   0.0, 0.540,
+            1.0,   0.558, 0.0, 0.449,
+            0.558, 1.0,   0.0, 0.501,
             0.0,   0.0,   0.0, 0.0,
-            0.479, 0.540, 0.0, 1.0,
+            0.449, 0.501, 0.0, 1.0,
           ]
 
           similarity_matrix_values(model).each_with_index do |value,i|

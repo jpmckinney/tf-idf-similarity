@@ -22,8 +22,12 @@ module TfIdfSimilarity
     #
     # @note Like Lucene, we use a b value of 0.75 and a k1 value of 1.2.
     def term_frequency(document, term)
-      tf = document.term_count(term)
-      (tf * 2.2) / (tf + 0.3 + 0.9 * documents.size / @model.average_document_size)
+      if @model.average_document_size.zero?
+        Float::NAN
+      else
+        tf = document.term_count(term)
+        (tf * 2.2) / (tf + 0.3 + 0.9 * document.size / @model.average_document_size)
+      end
     end
     alias_method :tf, :term_frequency
   end
