@@ -22,6 +22,7 @@ env:
   - MATRIX_LIBRARY=narray
   - MATRIX_LIBRARY=nmatrix
   - MATRIX_LIBRARY=matrix
+  - MATRIX_LIBRARY=numo
 addons:
   apt:
     packages:

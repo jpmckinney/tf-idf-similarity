@@ -15,7 +15,7 @@ module TfIdfSimilarity
       array = Array.new(terms.size) do |i|
         idf = inverse_document_frequency(terms[i])
         Array.new(documents.size) do |j|
-          term_frequency(documents[j], terms[i]) * idf
+          (term_frequency(documents[j], terms[i]) * idf).to_f
         end
       end
 

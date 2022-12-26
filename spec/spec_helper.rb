@@ -18,6 +18,8 @@ when :gsl
   require 'gsl'
 when :narray
   require 'narray'
+when :numo
+  require 'numo/narray'
 when :nmatrix
   require 'nmatrix'
 else

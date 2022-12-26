@@ -82,7 +82,12 @@ module TfIdfSimilarity
 
       describe '#term_frequency_inverse_document_frequency' do
         it 'should return negative infinity' do
-          model.tfidf(document, 'foo').should be_nan
+          case MATRIX_LIBRARY
+          when :numo
+            model.tfidf(document, 'foo').isnan.should eq 1
+          else
+            model.tfidf(document, 'foo').should be_nan
+          end
         end
       end
 
