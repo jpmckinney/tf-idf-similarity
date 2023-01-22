@@ -17,6 +17,10 @@ module TfIdfSimilarity
         norm = NMath.sqrt((@matrix ** 2).sum(1).reshape(@matrix.shape[0], 1))
         norm[norm.where2[1]] = 1.0 # avoid division by zero
         NMatrix.refer(@matrix / norm) # must be NMatrix for matrix multiplication
+      when :numo
+        norm = Numo::NMath.sqrt((@matrix ** 2).sum(0).reshape(1, @matrix.shape[0]))
+        norm[(norm.eq 0).where] = 1.0 # avoid division by zero
+        (@matrix / norm)
       when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/38
         normal = NMatrix.new(:dense, @matrix.shape, 0, :float64)
         (0...@matrix.shape[1]).each do |j|
@@ -44,7 +48,7 @@ module TfIdfSimilarity
     # @param [Integer] column index
     def get(i, j)
       case @library
-      when :narray
+      when :narray, :numo
         @matrix[j, i]
       else
         @matrix[i, j]
@@ -57,6 +61,8 @@ module TfIdfSimilarity
       case @library
       when :narray
         @matrix[true, index]
+      when :numo
+        @matrix[index, true]
       else
         @matrix.row(index)
       end
@@ -66,7 +72,7 @@ module TfIdfSimilarity
     # @return [GSL::Vector::View,NArray,NMatrix,Vector] a column
     def column(index)
       case @library
-      when :narray
+      when :narray, :numo
         @matrix[index, true]
       else
         @matrix.column(index)
@@ -78,7 +84,7 @@ module TfIdfSimilarity
       case @library
       when :gsl, :nmatrix
         @matrix.shape[0]
-      when :narray
+      when :narray, :numo
         @matrix.shape[1]
       else
         @matrix.row_size
@@ -90,7 +96,7 @@ module TfIdfSimilarity
       case @library
       when :gsl, :nmatrix
         @matrix.shape[1]
-      when :narray
+      when :narray, :numo
         @matrix.shape[0]
       else
         @matrix.column_size
@@ -110,7 +116,7 @@ module TfIdfSimilarity
     # @return [Float] the sum of all values in the matrix
     def sum
       case @library
-      when :narray
+      when :narray, :numo
         @matrix.sum
       else
         values.reduce(0, :+)
@@ -125,6 +131,8 @@ module TfIdfSimilarity
         GSL::Matrix[*array]
       when :narray
         NArray[*array]
+      when :numo
+        Numo::DFloat[*array]
       when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/91#issuecomment-18870619
         NMatrix.new(:dense, [array.size, array.empty? ? 0 : array[0].size], array.flatten, :float64)
       else
@@ -136,7 +144,7 @@ module TfIdfSimilarity
     # @return [GSL::Matrix,NArray,NMatrix,Matrix] the product
     def multiply_self(matrix)
       case @library
-      when :nmatrix
+      when :nmatrix, :numo
         matrix.transpose.dot(matrix)
       else
         matrix.transpose * matrix
@@ -149,6 +157,8 @@ module TfIdfSimilarity
         GSL::Sf::log(number)
       when :narray
         NMath.log(number)
+      when :numo
+        Numo::NMath.log(number)
       else
         Math.log(number)
       end
@@ -158,6 +168,8 @@ module TfIdfSimilarity
       case @library
       when :narray
         NMath.sqrt(number)
+      when :numo
+        Numo::NMath.sqrt(number)
       else
         Math.sqrt(number)
       end

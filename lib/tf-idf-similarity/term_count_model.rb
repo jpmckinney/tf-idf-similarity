@@ -37,6 +37,8 @@ module TfIdfSimilarity
         case @library
         when :gsl, :narray
           row(index).where.size
+        when :numo
+          (row(index).ne 0).where.size
         when :nmatrix
           row(index).each.count(&:nonzero?)
         else
@@ -57,7 +59,7 @@ module TfIdfSimilarity
       index = terms.index(term)
       if index
         case @library
-        when :gsl, :narray
+        when :gsl, :narray, :numo
           row(index).sum
         when :nmatrix
           row(index).each.reduce(0, :+) # NMatrix's `sum` method is slower
