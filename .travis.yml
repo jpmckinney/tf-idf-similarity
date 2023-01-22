@@ -12,14 +12,22 @@ rvm:
   - ruby-head
 matrix:
   allow_failures:
+    - rvm: 3.0
+      env: MATRIX_LIBRARY=gsl
+    - rvm: 3.1
+      env: MATRIX_LIBRARY=gsl
+    - rvm: 3.2
+      env: MATRIX_LIBRARY=gsl
     - rvm: ruby-head
       env: MATRIX_LIBRARY=gsl
     - rvm: ruby-head
-      env: MATRIX_LIBRARY=narray
+      env: MATRIX_LIBRARY=matrix
     - rvm: ruby-head
+      env: MATRIX_LIBRARY=narray
+    - rvm: 3.2
       env: MATRIX_LIBRARY=nmatrix
     - rvm: ruby-head
-      env: MATRIX_LIBRARY=matrix
+      env: MATRIX_LIBRARY=nmatrix
 env:
   - MATRIX_LIBRARY=gsl
   - MATRIX_LIBRARY=narray
