@@ -18,7 +18,7 @@ module TfIdfSimilarity
         norm[norm.where2[1]] = 1.0 # avoid division by zero
         NMatrix.refer(@matrix / norm) # must be NMatrix for matrix multiplication
       when :numo
-        norm = Numo::NMath.sqrt((@matrix ** 2).sum(0).reshape(1, @matrix.shape[0]))
+        norm = Numo::NMath.sqrt((@matrix ** 2).sum(0).reshape(1, @matrix.shape[1]))
         norm[(norm.eq 0).where] = 1.0 # avoid division by zero
         (@matrix / norm)
       when :nmatrix # @see https://github.com/SciRuby/nmatrix/issues/38
