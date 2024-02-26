@@ -12,7 +12,7 @@
 
 ### Fixed
 
-- Fix the `term_frequency` method in the `BM25Model` class caused by typographical error (`documents.size` instead of `document.size`).
+- Fix the `term_frequency` method in the `BM25Model` class, caused by a typographical error (`documents.size` instead of `document.size`).
 
 ## v0.2.0 (2019-12-19)
 
